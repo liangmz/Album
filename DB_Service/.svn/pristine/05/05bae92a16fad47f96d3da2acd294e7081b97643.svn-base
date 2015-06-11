@@ -1,0 +1,541 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ablumModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="ablumModelStoreContainer">
+          <EntitySet Name="a_ablum" EntityType="ablumModel.Store.a_ablum" store:Type="Tables" Schema="ablum" />
+          <EntitySet Name="a_evaluation" EntityType="ablumModel.Store.a_evaluation" store:Type="Tables" Schema="ablum" />
+          <EntitySet Name="a_picture" EntityType="ablumModel.Store.a_picture" store:Type="Tables" Schema="ablum" />
+          <EntitySet Name="a_relation" EntityType="ablumModel.Store.a_relation" store:Type="Tables" Schema="ablum" />
+          <EntitySet Name="a_tag" EntityType="ablumModel.Store.a_tag" store:Type="Tables" Schema="ablum" />
+          <EntitySet Name="a_upicture" EntityType="ablumModel.Store.a_upicture" store:Type="Tables" Schema="ablum" />
+          <EntitySet Name="a_user" EntityType="ablumModel.Store.a_user" store:Type="Tables" Schema="ablum" />
+          <AssociationSet Name="a_ablum_ibfk_1" Association="ablumModel.Store.a_ablum_ibfk_1">
+            <End Role="a_user" EntitySet="a_user" />
+            <End Role="a_ablum" EntitySet="a_ablum" />
+          </AssociationSet>
+          <AssociationSet Name="a_evaluation_ibfk_1" Association="ablumModel.Store.a_evaluation_ibfk_1">
+            <End Role="a_upicture" EntitySet="a_upicture" />
+            <End Role="a_evaluation" EntitySet="a_evaluation" />
+          </AssociationSet>
+          <AssociationSet Name="a_evaluation_ibfk_2" Association="ablumModel.Store.a_evaluation_ibfk_2">
+            <End Role="a_user" EntitySet="a_user" />
+            <End Role="a_evaluation" EntitySet="a_evaluation" />
+          </AssociationSet>
+          <AssociationSet Name="a_relation_ibfk_1" Association="ablumModel.Store.a_relation_ibfk_1">
+            <End Role="a_user" EntitySet="a_user" />
+            <End Role="a_relation" EntitySet="a_relation" />
+          </AssociationSet>
+          <AssociationSet Name="a_relation_ibfk_2" Association="ablumModel.Store.a_relation_ibfk_2">
+            <End Role="a_user" EntitySet="a_user" />
+            <End Role="a_relation" EntitySet="a_relation" />
+          </AssociationSet>
+          <AssociationSet Name="a_tag_ibfk_1" Association="ablumModel.Store.a_tag_ibfk_1">
+            <End Role="a_upicture" EntitySet="a_upicture" />
+            <End Role="a_tag" EntitySet="a_tag" />
+          </AssociationSet>
+          <AssociationSet Name="a_upicture_ibfk_1" Association="ablumModel.Store.a_upicture_ibfk_1">
+            <End Role="a_picture" EntitySet="a_picture" />
+            <End Role="a_upicture" EntitySet="a_upicture" />
+          </AssociationSet>
+          <AssociationSet Name="a_upicture_ibfk_2" Association="ablumModel.Store.a_upicture_ibfk_2">
+            <End Role="a_ablum" EntitySet="a_ablum" />
+            <End Role="a_upicture" EntitySet="a_upicture" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="a_ablum">
+          <Key>
+            <PropertyRef Name="a_id" />
+          </Key>
+          <Property Name="a_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="a_name" Type="varchar" Nullable="false" MaxLength="64" />
+          <Property Name="a_uid" Type="int" Nullable="false" />
+          <Property Name="a_createTime" Type="datetime" StoreGeneratedPattern="Identity" />
+          <Property Name="a_count" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="a_evaluation">
+          <Key>
+            <PropertyRef Name="e_id" />
+          </Key>
+          <Property Name="e_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="e_uid" Type="int" Nullable="false" />
+          <Property Name="e_upid" Type="int" Nullable="false" />
+          <Property Name="e_time" Type="datetime" StoreGeneratedPattern="Identity" />
+          <Property Name="e_evaluation" Type="varchar" Nullable="false" MaxLength="512" />
+        </EntityType>
+        <EntityType Name="a_picture">
+          <Key>
+            <PropertyRef Name="p_id" />
+          </Key>
+          <Property Name="p_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="p_code" Type="varchar" Nullable="false" MaxLength="32" />
+          <Property Name="p_path" Type="varchar" MaxLength="512" />
+        </EntityType>
+        <EntityType Name="a_relation">
+          <Key>
+            <PropertyRef Name="r_id" />
+          </Key>
+          <Property Name="r_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="r_my" Type="int" Nullable="false" />
+          <Property Name="r_friend" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="a_tag">
+          <Key>
+            <PropertyRef Name="t_id" />
+          </Key>
+          <Property Name="t_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="t_name" Type="varchar" Nullable="false" MaxLength="64" />
+          <Property Name="t_upid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="a_upicture">
+          <Key>
+            <PropertyRef Name="up_id" />
+          </Key>
+          <Property Name="up_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="up_name" Type="varchar" Nullable="false" MaxLength="256" />
+          <Property Name="up_pid" Type="int" Nullable="false" />
+          <Property Name="up_abid" Type="int" Nullable="false" />
+          <Property Name="up_power" Type="int" Nullable="false" />
+          <Property Name="up_uploadTime" Type="datetime" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="up_evaCount" Type="int" Nullable="false" />
+          <Property Name="up_description" Type="varchar" MaxLength="512" />
+        </EntityType>
+        <EntityType Name="a_user">
+          <Key>
+            <PropertyRef Name="u_id" />
+          </Key>
+          <Property Name="u_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="u_userName" Type="varchar" Nullable="false" MaxLength="32" />
+          <Property Name="u_password" Type="varchar" Nullable="false" MaxLength="32" />
+          <Property Name="u_Email" Type="varchar" MaxLength="64" />
+          <Property Name="u_Code" Type="varchar" MaxLength="128" />
+          <Property Name="u_pic" Type="int" />
+        </EntityType>
+        <Association Name="a_ablum_ibfk_1">
+          <End Role="a_user" Type="ablumModel.Store.a_user" Multiplicity="1" />
+          <End Role="a_ablum" Type="ablumModel.Store.a_ablum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="a_user">
+              <PropertyRef Name="u_id" />
+            </Principal>
+            <Dependent Role="a_ablum">
+              <PropertyRef Name="a_uid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="a_evaluation_ibfk_1">
+          <End Role="a_upicture" Type="ablumModel.Store.a_upicture" Multiplicity="1" />
+          <End Role="a_evaluation" Type="ablumModel.Store.a_evaluation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="a_upicture">
+              <PropertyRef Name="up_id" />
+            </Principal>
+            <Dependent Role="a_evaluation">
+              <PropertyRef Name="e_upid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="a_evaluation_ibfk_2">
+          <End Role="a_user" Type="ablumModel.Store.a_user" Multiplicity="1" />
+          <End Role="a_evaluation" Type="ablumModel.Store.a_evaluation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="a_user">
+              <PropertyRef Name="u_id" />
+            </Principal>
+            <Dependent Role="a_evaluation">
+              <PropertyRef Name="e_uid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="a_relation_ibfk_1">
+          <End Role="a_user" Type="ablumModel.Store.a_user" Multiplicity="1" />
+          <End Role="a_relation" Type="ablumModel.Store.a_relation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="a_user">
+              <PropertyRef Name="u_id" />
+            </Principal>
+            <Dependent Role="a_relation">
+              <PropertyRef Name="r_my" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="a_relation_ibfk_2">
+          <End Role="a_user" Type="ablumModel.Store.a_user" Multiplicity="1" />
+          <End Role="a_relation" Type="ablumModel.Store.a_relation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="a_user">
+              <PropertyRef Name="u_id" />
+            </Principal>
+            <Dependent Role="a_relation">
+              <PropertyRef Name="r_friend" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="a_tag_ibfk_1">
+          <End Role="a_upicture" Type="ablumModel.Store.a_upicture" Multiplicity="1" />
+          <End Role="a_tag" Type="ablumModel.Store.a_tag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="a_upicture">
+              <PropertyRef Name="up_id" />
+            </Principal>
+            <Dependent Role="a_tag">
+              <PropertyRef Name="t_upid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="a_upicture_ibfk_1">
+          <End Role="a_picture" Type="ablumModel.Store.a_picture" Multiplicity="1" />
+          <End Role="a_upicture" Type="ablumModel.Store.a_upicture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="a_picture">
+              <PropertyRef Name="p_id" />
+            </Principal>
+            <Dependent Role="a_upicture">
+              <PropertyRef Name="up_pid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="a_upicture_ibfk_2">
+          <End Role="a_ablum" Type="ablumModel.Store.a_ablum" Multiplicity="1" />
+          <End Role="a_upicture" Type="ablumModel.Store.a_upicture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="a_ablum">
+              <PropertyRef Name="a_id" />
+            </Principal>
+            <Dependent Role="a_upicture">
+              <PropertyRef Name="up_abid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ablumModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ablumEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="a_ablum" EntityType="ablumModel.a_ablum" />
+          <EntitySet Name="a_evaluation" EntityType="ablumModel.a_evaluation" />
+          <EntitySet Name="a_picture" EntityType="ablumModel.a_picture" />
+          <EntitySet Name="a_relation" EntityType="ablumModel.a_relation" />
+          <EntitySet Name="a_tag" EntityType="ablumModel.a_tag" />
+          <EntitySet Name="a_upicture" EntityType="ablumModel.a_upicture" />
+          <EntitySet Name="a_user" EntityType="ablumModel.a_user" />
+          <AssociationSet Name="a_ablum_ibfk_1" Association="ablumModel.a_ablum_ibfk_1">
+            <End Role="a_user" EntitySet="a_user" />
+            <End Role="a_ablum" EntitySet="a_ablum" />
+          </AssociationSet>
+          <AssociationSet Name="a_upicture_ibfk_2" Association="ablumModel.a_upicture_ibfk_2">
+            <End Role="a_ablum" EntitySet="a_ablum" />
+            <End Role="a_upicture" EntitySet="a_upicture" />
+          </AssociationSet>
+          <AssociationSet Name="a_evaluation_ibfk_1" Association="ablumModel.a_evaluation_ibfk_1">
+            <End Role="a_upicture" EntitySet="a_upicture" />
+            <End Role="a_evaluation" EntitySet="a_evaluation" />
+          </AssociationSet>
+          <AssociationSet Name="a_evaluation_ibfk_2" Association="ablumModel.a_evaluation_ibfk_2">
+            <End Role="a_user" EntitySet="a_user" />
+            <End Role="a_evaluation" EntitySet="a_evaluation" />
+          </AssociationSet>
+          <AssociationSet Name="a_upicture_ibfk_1" Association="ablumModel.a_upicture_ibfk_1">
+            <End Role="a_picture" EntitySet="a_picture" />
+            <End Role="a_upicture" EntitySet="a_upicture" />
+          </AssociationSet>
+          <AssociationSet Name="a_relation_ibfk_1" Association="ablumModel.a_relation_ibfk_1">
+            <End Role="a_user" EntitySet="a_user" />
+            <End Role="a_relation" EntitySet="a_relation" />
+          </AssociationSet>
+          <AssociationSet Name="a_relation_ibfk_2" Association="ablumModel.a_relation_ibfk_2">
+            <End Role="a_user" EntitySet="a_user" />
+            <End Role="a_relation" EntitySet="a_relation" />
+          </AssociationSet>
+          <AssociationSet Name="a_tag_ibfk_1" Association="ablumModel.a_tag_ibfk_1">
+            <End Role="a_upicture" EntitySet="a_upicture" />
+            <End Role="a_tag" EntitySet="a_tag" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="a_ablum">
+          <Key>
+            <PropertyRef Name="a_id" />
+          </Key>
+          <Property Name="a_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="a_name" Type="String" Nullable="false" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="a_uid" Type="Int32" Nullable="false" />
+          <Property Name="a_createTime" Type="DateTime" p1:StoreGeneratedPattern="Identity" Precision="0" />
+          <Property Name="a_count" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="a_user" Relationship="ablumModel.a_ablum_ibfk_1" FromRole="a_ablum" ToRole="a_user" />
+          <NavigationProperty Name="a_upicture" Relationship="ablumModel.a_upicture_ibfk_2" FromRole="a_ablum" ToRole="a_upicture" />
+        </EntityType>
+        <EntityType Name="a_evaluation">
+          <Key>
+            <PropertyRef Name="e_id" />
+          </Key>
+          <Property Name="e_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="e_uid" Type="Int32" Nullable="false" />
+          <Property Name="e_upid" Type="Int32" Nullable="false" />
+          <Property Name="e_time" Type="DateTime" p1:StoreGeneratedPattern="Identity" Precision="0" />
+          <Property Name="e_evaluation" Type="String" Nullable="false" MaxLength="512" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="a_upicture" Relationship="ablumModel.a_evaluation_ibfk_1" FromRole="a_evaluation" ToRole="a_upicture" />
+          <NavigationProperty Name="a_user" Relationship="ablumModel.a_evaluation_ibfk_2" FromRole="a_evaluation" ToRole="a_user" />
+        </EntityType>
+        <EntityType Name="a_picture">
+          <Key>
+            <PropertyRef Name="p_id" />
+          </Key>
+          <Property Name="p_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="p_code" Type="String" Nullable="false" MaxLength="32" Unicode="false" FixedLength="false" />
+          <Property Name="p_path" Type="String" MaxLength="512" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="a_upicture" Relationship="ablumModel.a_upicture_ibfk_1" FromRole="a_picture" ToRole="a_upicture" />
+        </EntityType>
+        <EntityType Name="a_relation">
+          <Key>
+            <PropertyRef Name="r_id" />
+          </Key>
+          <Property Name="r_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="r_my" Type="Int32" Nullable="false" />
+          <Property Name="r_friend" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="a_user" Relationship="ablumModel.a_relation_ibfk_1" FromRole="a_relation" ToRole="a_user" />
+          <NavigationProperty Name="a_user1" Relationship="ablumModel.a_relation_ibfk_2" FromRole="a_relation" ToRole="a_user" />
+        </EntityType>
+        <EntityType Name="a_tag">
+          <Key>
+            <PropertyRef Name="t_id" />
+          </Key>
+          <Property Name="t_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="t_name" Type="String" Nullable="false" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="t_upid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="a_upicture" Relationship="ablumModel.a_tag_ibfk_1" FromRole="a_tag" ToRole="a_upicture" />
+        </EntityType>
+        <EntityType Name="a_upicture">
+          <Key>
+            <PropertyRef Name="up_id" />
+          </Key>
+          <Property Name="up_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="up_name" Type="String" Nullable="false" MaxLength="256" Unicode="false" FixedLength="false" />
+          <Property Name="up_pid" Type="Int32" Nullable="false" />
+          <Property Name="up_abid" Type="Int32" Nullable="false" />
+          <Property Name="up_power" Type="Int32" Nullable="false" />
+          <Property Name="up_uploadTime" Type="DateTime" Nullable="false" p1:StoreGeneratedPattern="Identity" Precision="0" />
+          <Property Name="up_evaCount" Type="Int32" Nullable="false" />
+          <Property Name="up_description" Type="String" MaxLength="512" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="a_ablum" Relationship="ablumModel.a_upicture_ibfk_2" FromRole="a_upicture" ToRole="a_ablum" />
+          <NavigationProperty Name="a_evaluation" Relationship="ablumModel.a_evaluation_ibfk_1" FromRole="a_upicture" ToRole="a_evaluation" />
+          <NavigationProperty Name="a_picture" Relationship="ablumModel.a_upicture_ibfk_1" FromRole="a_upicture" ToRole="a_picture" />
+          <NavigationProperty Name="a_tag" Relationship="ablumModel.a_tag_ibfk_1" FromRole="a_upicture" ToRole="a_tag" />
+        </EntityType>
+        <EntityType Name="a_user">
+          <Key>
+            <PropertyRef Name="u_id" />
+          </Key>
+          <Property Name="u_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="u_userName" Type="String" Nullable="false" MaxLength="32" Unicode="false" FixedLength="false" />
+          <Property Name="u_password" Type="String" Nullable="false" MaxLength="32" Unicode="false" FixedLength="false" />
+          <Property Name="u_Email" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="u_Code" Type="String" MaxLength="128" Unicode="false" FixedLength="false" />
+          <Property Name="u_pic" Type="Int32" />
+          <NavigationProperty Name="a_ablum" Relationship="ablumModel.a_ablum_ibfk_1" FromRole="a_user" ToRole="a_ablum" />
+          <NavigationProperty Name="a_evaluation" Relationship="ablumModel.a_evaluation_ibfk_2" FromRole="a_user" ToRole="a_evaluation" />
+          <NavigationProperty Name="a_relation" Relationship="ablumModel.a_relation_ibfk_1" FromRole="a_user" ToRole="a_relation" />
+          <NavigationProperty Name="a_relation1" Relationship="ablumModel.a_relation_ibfk_2" FromRole="a_user" ToRole="a_relation" />
+        </EntityType>
+        <Association Name="a_ablum_ibfk_1">
+          <End Role="a_user" Type="ablumModel.a_user" Multiplicity="1" />
+          <End Role="a_ablum" Type="ablumModel.a_ablum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="a_user">
+              <PropertyRef Name="u_id" />
+            </Principal>
+            <Dependent Role="a_ablum">
+              <PropertyRef Name="a_uid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="a_upicture_ibfk_2">
+          <End Role="a_ablum" Type="ablumModel.a_ablum" Multiplicity="1" />
+          <End Role="a_upicture" Type="ablumModel.a_upicture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="a_ablum">
+              <PropertyRef Name="a_id" />
+            </Principal>
+            <Dependent Role="a_upicture">
+              <PropertyRef Name="up_abid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="a_evaluation_ibfk_1">
+          <End Role="a_upicture" Type="ablumModel.a_upicture" Multiplicity="1" />
+          <End Role="a_evaluation" Type="ablumModel.a_evaluation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="a_upicture">
+              <PropertyRef Name="up_id" />
+            </Principal>
+            <Dependent Role="a_evaluation">
+              <PropertyRef Name="e_upid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="a_evaluation_ibfk_2">
+          <End Role="a_user" Type="ablumModel.a_user" Multiplicity="1" />
+          <End Role="a_evaluation" Type="ablumModel.a_evaluation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="a_user">
+              <PropertyRef Name="u_id" />
+            </Principal>
+            <Dependent Role="a_evaluation">
+              <PropertyRef Name="e_uid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="a_upicture_ibfk_1">
+          <End Role="a_picture" Type="ablumModel.a_picture" Multiplicity="1" />
+          <End Role="a_upicture" Type="ablumModel.a_upicture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="a_picture">
+              <PropertyRef Name="p_id" />
+            </Principal>
+            <Dependent Role="a_upicture">
+              <PropertyRef Name="up_pid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="a_relation_ibfk_1">
+          <End Role="a_user" Type="ablumModel.a_user" Multiplicity="1" />
+          <End Role="a_relation" Type="ablumModel.a_relation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="a_user">
+              <PropertyRef Name="u_id" />
+            </Principal>
+            <Dependent Role="a_relation">
+              <PropertyRef Name="r_my" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="a_relation_ibfk_2">
+          <End Role="a_user" Type="ablumModel.a_user" Multiplicity="1" />
+          <End Role="a_relation" Type="ablumModel.a_relation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="a_user">
+              <PropertyRef Name="u_id" />
+            </Principal>
+            <Dependent Role="a_relation">
+              <PropertyRef Name="r_friend" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="a_tag_ibfk_1">
+          <End Role="a_upicture" Type="ablumModel.a_upicture" Multiplicity="1" />
+          <End Role="a_tag" Type="ablumModel.a_tag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="a_upicture">
+              <PropertyRef Name="up_id" />
+            </Principal>
+            <Dependent Role="a_tag">
+              <PropertyRef Name="t_upid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ablumModelStoreContainer" CdmEntityContainer="ablumEntities">
+          <EntitySetMapping Name="a_ablum">
+            <EntityTypeMapping TypeName="ablumModel.a_ablum">
+              <MappingFragment StoreEntitySet="a_ablum">
+                <ScalarProperty Name="a_id" ColumnName="a_id" />
+                <ScalarProperty Name="a_name" ColumnName="a_name" />
+                <ScalarProperty Name="a_uid" ColumnName="a_uid" />
+                <ScalarProperty Name="a_createTime" ColumnName="a_createTime" />
+                <ScalarProperty Name="a_count" ColumnName="a_count" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="a_evaluation">
+            <EntityTypeMapping TypeName="ablumModel.a_evaluation">
+              <MappingFragment StoreEntitySet="a_evaluation">
+                <ScalarProperty Name="e_id" ColumnName="e_id" />
+                <ScalarProperty Name="e_uid" ColumnName="e_uid" />
+                <ScalarProperty Name="e_upid" ColumnName="e_upid" />
+                <ScalarProperty Name="e_time" ColumnName="e_time" />
+                <ScalarProperty Name="e_evaluation" ColumnName="e_evaluation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="a_picture">
+            <EntityTypeMapping TypeName="ablumModel.a_picture">
+              <MappingFragment StoreEntitySet="a_picture">
+                <ScalarProperty Name="p_id" ColumnName="p_id" />
+                <ScalarProperty Name="p_code" ColumnName="p_code" />
+                <ScalarProperty Name="p_path" ColumnName="p_path" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="a_relation">
+            <EntityTypeMapping TypeName="ablumModel.a_relation">
+              <MappingFragment StoreEntitySet="a_relation">
+                <ScalarProperty Name="r_id" ColumnName="r_id" />
+                <ScalarProperty Name="r_my" ColumnName="r_my" />
+                <ScalarProperty Name="r_friend" ColumnName="r_friend" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="a_tag">
+            <EntityTypeMapping TypeName="ablumModel.a_tag">
+              <MappingFragment StoreEntitySet="a_tag">
+                <ScalarProperty Name="t_id" ColumnName="t_id" />
+                <ScalarProperty Name="t_name" ColumnName="t_name" />
+                <ScalarProperty Name="t_upid" ColumnName="t_upid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="a_upicture">
+            <EntityTypeMapping TypeName="ablumModel.a_upicture">
+              <MappingFragment StoreEntitySet="a_upicture">
+                <ScalarProperty Name="up_id" ColumnName="up_id" />
+                <ScalarProperty Name="up_name" ColumnName="up_name" />
+                <ScalarProperty Name="up_pid" ColumnName="up_pid" />
+                <ScalarProperty Name="up_abid" ColumnName="up_abid" />
+                <ScalarProperty Name="up_power" ColumnName="up_power" />
+                <ScalarProperty Name="up_uploadTime" ColumnName="up_uploadTime" />
+                <ScalarProperty Name="up_evaCount" ColumnName="up_evaCount" />
+                <ScalarProperty Name="up_description" ColumnName="up_description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="a_user">
+            <EntityTypeMapping TypeName="ablumModel.a_user">
+              <MappingFragment StoreEntitySet="a_user">
+                <ScalarProperty Name="u_id" ColumnName="u_id" />
+                <ScalarProperty Name="u_userName" ColumnName="u_userName" />
+                <ScalarProperty Name="u_password" ColumnName="u_password" />
+                <ScalarProperty Name="u_Email" ColumnName="u_Email" />
+                <ScalarProperty Name="u_Code" ColumnName="u_Code" />
+                <ScalarProperty Name="u_pic" ColumnName="u_pic" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

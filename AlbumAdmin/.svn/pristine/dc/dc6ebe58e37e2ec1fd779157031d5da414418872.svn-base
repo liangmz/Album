@@ -1,0 +1,17 @@
+﻿body {
+}
+.Header {
+    margin:30px;
+}
+.List {
+    width:20%;
+    float:left;
+}
+    .List li {
+        margin:5px;
+    }
+.Content {
+    width:78%;
+    float:right;
+    margin-right:20px;
+}

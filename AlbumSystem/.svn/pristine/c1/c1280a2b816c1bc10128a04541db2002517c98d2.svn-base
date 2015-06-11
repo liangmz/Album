@@ -1,0 +1,82 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/HD.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <script src="js/pic.js"></script>
+    <script src="js/defaultShare.js"></script>
+
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="BODY" runat="Server">
+    
+    <div class="col-lg-2" id="PA">
+        <!--
+        <div class="thumbnail">
+            <a href="ThisPic.aspx">
+                <img src="Image/围观.jpg" class="img-responsive img-rounded mypic" />
+            </a>
+            <div class="caption">
+                <h4><a href="#">TITLE</a></h4>
+                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+            </div>
+        </div>
+        <div class="thumbnail">
+            <img src="Image/领取月饼通知.jpg" class="img-responsive img-rounded mypic" />
+        </div>
+        -->
+    </div>
+    <div class="col-lg-2" id="PB">
+        <!--
+        <div class="thumbnail">
+            <img src="Image/未命名.gif" class="img-responsive  img-rounded mypic" />
+        </div>
+        -->
+    </div>
+    <div class="col-lg-2" id="PC">
+        <!--
+        <div class="thumbnail">
+            <img src="Image/贤者状态.jpg" class="img-responsive img-thumbnail mypic" />
+        </div>
+        <div class="thumbnail">
+            <img src="Image/a.jpg" class="img-responsive  img-rounded mypic" />
+        </div>
+        <div class="thumbnail">
+            <img src="Image/你说这谁懂啊.jpg" class="img-responsive img-thumbnail mypic" />
+
+        </div>
+        -->    
+    </div>
+    <div class="col-lg-2" id="PD">
+        <!--
+        <div class="thumbnail">
+            <img src="Image/未命名.gif" class="img-responsive  img-rounded mypic" />
+        </div>
+        -->
+    </div>
+    <div class="col-lg-2" id="PE">
+        <!--
+        <div class="thumbnail">
+            <img src="Image/未命名11.jpg" class="img-responsive img-rounded mypic" />
+            <div class="caption">
+                <p>*******************</p>
+            </div>
+        </div>
+        <div class="thumbnail">
+            <img src="Image/未命名11.jpg" class="img-responsive img-rounded mypic" />
+            <div class="caption">
+                <h3>TITLE</h3>
+                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+            </div>
+        </div>
+        -->
+    </div>
+    <div class="col-lg-2" id="PF">
+        <!--
+        <div class="thumbnail">
+            <img src="Image/未命名.gif" class="img-responsive  img-rounded mypic" />
+        </div>
+        -->
+    </div>
+
+
+
+</asp:Content>
+

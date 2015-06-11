@@ -1,0 +1,223 @@
+﻿
+window.onload = function () {
+    $('#Update').on('hidden.bs.modal', function (e) {
+        try {
+            var flag = document.getElementById('flag');
+            flag.setAttribute('id', '');
+        } catch (e)
+        { }
+    });
+    document.getElementById("HD").className = "active";
+    changePageActive(1);
+    //buildPage(sessionStorage.pageCount, 1, 'return changePage(this)');
+}
+
+function onImg(e) {
+    e.src = 'Image/vista_black_system_15.png';
+}
+function outImg(e) {
+    e.src = 'Image/vista_black_system_08.png';
+}
+
+/*获得一个专辑节点*/
+function getAblumPoint(aid, ablumName, date, count) {
+    var div = document.createElement('div');//div
+    div.className = 'media';
+
+    var content = '<div class="media">' +
+        '<a class="pull-left" href="AblumPics_2.aspx?AN=' + ablumName + '&amp;aid=' + aid + '">' +
+            '<img src="Image/vista_black_system_08.png" onmouseover="onImg(this)" onmouseout="outImg(this)" alt="X" class="media-object" style="width: 64px; height: 64px;">' +
+        '</a>' +
+        '<div class="media-body"><button type="button" class="btn btn-primary btn-sm pull-right" onclick="changeAblumName(this);">编辑</button>' +
+            '<h3 class="media-heading">' +
+                '<a href="AblumPics_2.aspx?AN=' + ablumName + '&amp;aid=' + aid + '" aid="5">' + ablumName + '</a>' +
+            '</h3>' +
+            '<a href="javascript:void(0);" onclick="return false;">创建时间：' + date + '</a>' +
+            '<br><a href="javascript:void(0)">图片数：' + count + '</a>' +
+        '</div>' +
+        '</div>';
+
+    div.innerHTML = content;
+
+    return div;
+}
+
+/*获取专辑列表*/
+function changePageActive(goPage) {
+    sessionStorage.page = goPage;
+    var data = new FormData();
+    data.append("page", goPage);
+    var xmlrequest = getXmlHttpRequest();
+
+    xmlrequest.open("post", "Ashx/Ablum.ashx", true);
+    xmlrequest.onreadystatechange = function () {
+        if (xmlrequest.readyState == 4 && xmlrequest.status == 200) {
+            var xml = xmlrequest.responseText;
+            var xmlDom = getXML(xml);
+            var root = xmlDom.documentElement;
+            sessionStorage.pageCount = getXmlNodeValue(root.getElementsByTagName('AblumCount')[0]);
+            var ablumList = root.getElementsByTagName('MyAblumList')[0];
+            //alert(pageCount);
+            AA.innerHTML = '';
+            AB.innerHTML = '';
+            AC.innerHTML = '';
+            var E = function (j) {
+                switch (j) {
+                    case 0: { return document.getElementById('AA'); };
+                    case 1: { return document.getElementById('AB'); };
+                    case 2: { return document.getElementById('AC'); };
+                }
+            };
+            //建立结果页面
+            for (var i = 0, j = 0 ; i < ablumList.childNodes.length ; i++, j = (j + 1) % 3) {
+                var ablum = ablumList.childNodes[i];
+                var AID = getXmlNodeValue(ablum.getElementsByTagName('AID')[0]);
+                var ANAME = getXmlNodeValue(ablum.getElementsByTagName('ANAME')[0]);
+                var ATIME = getXmlNodeValue(ablum.getElementsByTagName('ATIME')[0]);
+                var ACOUNT = getXmlNodeValue(ablum.getElementsByTagName('AECOUNT')[0]);
+                var MIN = E(j);
+                MIN.appendChild(getAblumPoint(AID, ANAME, ATIME, ACOUNT));
+            }
+            buildPage(sessionStorage.pageCount, sessionStorage.page, 'return changePage(this)');
+        }
+    }
+    xmlrequest.send(data);
+}
+
+/**/
+function changeAblumName(e) {
+    var F = e.parentNode.children[1].children[0];
+    document.getElementById('AblumName').value = F.innerHTML;
+    F.id = 'flag';
+    $('#Update').modal('show');
+}
+/*执行更新*/
+function changeAblumName2(e) {
+    var AN = document.getElementById('AblumName');
+    var flag = document.getElementById('flag');
+    var aid = flag.getAttribute('aid');
+    var ablumName = AN.value;
+
+    var data = new FormData();
+    data.append('aid', aid);
+    data.append('ablumName', ablumName);
+
+    var xmlrequest = getXmlHttpRequest();
+    xmlrequest.open('post', 'Ashx/AblumUpdate.ashx', true);
+    xmlrequest.onreadystatechange = function () {
+        if (xmlrequest.readyState == 4 && xmlrequest.status == 200) {
+            //alert(xmlrequest.responseText);
+            try{
+                flag.setAttribute('id', '');
+            } catch (e) { }
+            if (xmlrequest.responseText == '-1') {
+                $('#Lose').modal('show');
+                $('#Update').modal('hide');
+            }
+            else {
+                flag.innerHTML = AN.value;
+                $('#Success').modal('show');
+                $('#Update').modal('hide');
+            }
+        }
+    }
+    xmlrequest.send(data);
+
+}
+
+/*创建专辑*/
+function createAblum(e) {
+    var MIN = AA.offsetHeight <= AB.offsetHeight ? AA : AB;
+    MIN = MIN.offsetHeight <= AC.offsetHeight ? MIN : AC;
+    //var CreateAblumName = document.getElementById('CreateAblumName');
+    if (e.value.length > 0) {
+
+        var data = new FormData();
+        data.append('CreateAblumName', e.value);
+
+        var xmlrequest = getXmlHttpRequest();
+        xmlrequest.open('post', 'Ashx/AblumCreate.ashx', true);
+        xmlrequest.onreadystatechange = function () {
+            if (xmlrequest.readyState == 4 && xmlrequest.status == 200) {
+                //alert(xmlrequest.responseText);
+                if (xmlrequest.responseText == '-1' || xmlrequest.responseText == -2) {
+                    $('#Lose').modal('show');
+                    $('#Create').modal('hide');
+                }
+                else {
+                    var xml = getXML(xmlrequest.responseText);
+                    /*这里是根据响应XML数据创建节点*/
+                    e.value = '';
+                    $('#Success').modal('show');
+                    $('#Create').modal('hide');
+                    changePageActive(sessionStorage.page);
+                    buildPage(sessionStorage.pageCount, sessionStorage.page, 'return changePage(this)');
+                }
+                try{
+                    var flag = document.getElementById('flag');
+                    flag.setAttribute('id', '');
+                } catch (e) { }
+            }
+        }
+        xmlrequest.send(data);
+    }
+}
+
+function DeleteAblum() {
+    var flag = document.getElementById('flag');
+    var DIV_media = flag.parentNode.parentNode.parentNode;
+    var DIV_father = DIV_media.parentNode;
+    var ablumName = flag.innerHTML;
+
+    document.getElementById('DeleteAlbumLoading').style.display = 'block';
+    document.getElementById('btnDeleteAlbum').setAttribute('disabled', 'disabled');
+    var data = new FormData();
+    data.append('ablumName', ablumName);
+
+    var xmlrequest = getXmlHttpRequest();
+    xmlrequest.open('post', 'Ashx/AblumDelete.ashx', true);
+    xmlrequest.onreadystatechange = function () {
+        if (xmlrequest.readyState == 4 && xmlrequest.status == 200) {
+            document.getElementById('DeleteAlbumLoading').style.display = 'none';
+            try { document.getElementById('btnDeleteAlbum').removeAttribute('disabled'); } catch (e) { };
+            try {
+
+                var flag = document.getElementById('flag');
+                flag.setAttribute('id', '');
+            } catch (e) { }
+            if (xmlrequest.responseText == '-1') {
+                $('#Lose').modal('show');
+                $('#Update').modal('hide');
+            }
+            else {
+                //flag.innerHTML = AN.value;
+                $('#Success').modal('show');
+                DIV_father.parentNode.removeChild(DIV_father);
+                $('#Update').modal('hide');
+            }
+        }
+    }
+    xmlrequest.send(data);
+}
+
+
+function removeLoadingNode() {
+    AA.removeChild(LA);
+    AB.removeChild(LB);
+    AC.removeChild(LC);
+    //LA.remove();
+    //LB.remove();
+    //LC.remove();
+}
+function setLoadingNode() {
+    AA.appendChild(loadingNode('LA'));
+    AB.appendChild(loadingNode('LB'));
+    AC.appendChild(loadingNode('LC'));
+}
+function loadingNode(id) {
+    var L = document.createElement('div');
+    L.setAttribute('id', id);
+    L.className = 'thumbnail';
+    L.innerHTML = '<span class="glyphicon glyphicon-refresh tagLoading"></span>  Loading...';
+    return L;
+}

@@ -1,0 +1,43 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default_Login.aspx.cs" Inherits="Default_Login" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Album</title>
+    <script src="dist/js/jquery.js"></script>
+    <link rel="stylesheet" href="dist/css/bootstrap.min.css" media="screen" />
+
+    <script src="dist/js/bootstrap.min.js"></script>
+    <script src="js/master.js"></script>
+    <link href="css/mycss.css" rel="stylesheet" />
+
+    <link rel="Shortcut Icon" href="easyicon_net_a.ico" />
+    <!--地址栏和标签上显示图标-->
+    <link rel="Bookmark" href="easyicon_net_a.ico" />
+    <!--收藏夹显示图标-->
+</head>
+<body>
+    <a href="Default.aspx">进入系统</a>
+    <form>
+        <div>
+            <label>用户名</label>
+            <input type="text" />
+        </div>
+        <div>
+            <label>密码</label>
+            <input type="password" />
+        </div>
+        <div>
+            <a href="javascript:void(0);">忘记密码?</a>
+        </div>
+        <div>
+            <button type="submit">登陆</button>
+            </div>
+        <div>
+            <button type="reset">重置</button>
+        </div>
+    </form>
+</body>
+</html>

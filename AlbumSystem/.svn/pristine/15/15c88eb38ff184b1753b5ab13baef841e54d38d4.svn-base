@@ -1,0 +1,28 @@
+﻿<%@ WebHandler Language="C#" Class="ThePic" %>
+
+using System;
+using System.Web;
+using System.Web.SessionState;
+using System.Net;
+
+public class ThePic : IHttpHandler, IRequiresSessionState
+{
+    
+    public void ProcessRequest (HttpContext context) {
+        int pid = Convert.ToInt32(context.Request.Form["pid"].ToString());
+        localhost.AblumService AS = new localhost.AblumService();
+        AS.CookieContainer = context.Session["cookie"] != null ? (CookieContainer)context.Session["cookie"] : new CookieContainer();
+
+        context.Response.Clear();
+        context.Response.Write(AS.GetPicInfo(pid));
+        context.Response.End();
+        
+    }
+ 
+    public bool IsReusable {
+        get {
+            return false;
+        }
+    }
+
+}

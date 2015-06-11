@@ -1,0 +1,42 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/HD.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <script src="js/lazyPic.js"></script>
+    <script src="js/defaultShare.js"></script>
+
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="BODY" runat="Server">
+
+    <div class="col-lg-2" id="PA">
+        <div class="thumbnail" id="LA">
+            <span class="glyphicon glyphicon-refresh tagLoading"></span>  Loading...
+        </div>
+    </div>
+    <div class="col-lg-2" id="PB">
+        <div class="thumbnail" id="LB">
+            <span class="glyphicon glyphicon-refresh tagLoading"></span>  Loading...
+        </div>
+    </div>
+    <div class="col-lg-2" id="PC">
+        <div class="thumbnail" id="LC">
+            <span class="glyphicon glyphicon-refresh tagLoading"></span>  Loading...
+        </div>
+    </div>
+    <div class="col-lg-2" id="PD">
+        <div class="thumbnail" id="LD">
+            <span class="glyphicon glyphicon-refresh tagLoading"></span>  Loading...
+        </div>
+    </div>
+    <div class="col-lg-2" id="PE">
+        <div class="thumbnail" id="LE">
+            <span class="glyphicon glyphicon-refresh tagLoading"></span>  Loading...
+        </div>
+    </div>
+    <div class="col-lg-2" id="PF">
+        <div class="thumbnail" id="LF">
+            <span class="glyphicon glyphicon-refresh tagLoading"></span>  Loading...
+        </div>
+    </div>
+
+</asp:Content>
+

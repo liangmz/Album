@@ -1,0 +1,1651 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="HelloWorld">
+        <s:complexType />
+      </s:element>
+      <s:element name="HelloWorldResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HelloWorldResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetRegisterCode">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="width" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="height" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetRegisterCodeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetRegisterCodeResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Login">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="USERNAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PASSWORD" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LoginResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LoginResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Register">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="USERNAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PASSWORD" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EMAIL" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegisterResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="RegisterResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegisterSoapHeader" type="tns:RegisterSoapHeader" />
+      <s:complexType name="RegisterSoapHeader">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="R_Code" type="s:string" />
+        </s:sequence>
+        <s:anyAttribute />
+      </s:complexType>
+      <s:element name="LoginOut">
+        <s:complexType />
+      </s:element>
+      <s:element name="LoginOutResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="LoginOutResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdataUserInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PASSWORD" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EMAIL" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="IMAGE" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="EXNAME" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdataUserInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdataUserInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateSoapHeader" type="tns:UpdateSoapHeader" />
+      <s:complexType name="UpdateSoapHeader">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+        </s:sequence>
+        <s:anyAttribute />
+      </s:complexType>
+      <s:element name="ValidateEmail_GetCode">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HOSTURL" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidateEmail_GetCodeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ValidateEmail_GetCodeResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidateEmail_PutCode">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="USERNAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="KEY" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidateEmail_PutCodeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ValidateEmail_PutCodeResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PasswordResetUrl">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EMAIL" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="HOSTURL" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PasswordResetUrlResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PasswordResetUrlResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PasswordReset">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="USERNAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="NewPasword" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="KEY" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PasswordResetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PasswordResetResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Search">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="USERNAME" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="PAGE" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchPic">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PICKEYWORD" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="PAGE" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchPicResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchPicResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddFriend">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="FID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddFriendResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddFriendResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DelFriend">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="USERNAME_LIST" type="tns:ArrayOfInt" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfInt">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="int" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="DelFriendResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DelFriendResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FriendsList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PAGE" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FriendsListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FriendsListResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EvaPic">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PICID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="CONTENT" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EvaPicResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="EvaPicResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEvaPic">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PICID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="PAGE" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEvaPicResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetEvaPicResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateAblum">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PIC_NAME" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateAblumResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CreateAblumResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteAblum">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PIC_NAME" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteAblumResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DeleteAblumResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateAblum">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ABLUMID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="NEW_NAME" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateAblumResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UpdateAblumResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MyAlbumList">
+        <s:complexType />
+      </s:element>
+      <s:element name="MyAlbumListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MyAlbumListResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MyAblumList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PAGE" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MyAblumListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MyAblumListResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadPic_2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="IMAGE" type="tns:ArrayOfBase64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="PIC_NAME" type="tns:ArrayOfString" />
+            <s:element minOccurs="1" maxOccurs="1" name="FROM_ALBUM" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="EXNAME" type="tns:ArrayOfString" />
+            <s:element minOccurs="1" maxOccurs="1" name="POWER" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfBase64Binary">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="base64Binary" nillable="true" type="s:base64Binary" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UploadPic_2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UploadPic_2Result" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RemovePics">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PICID" type="tns:ArrayOfInt" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RemovePicsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="RemovePicsResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPicInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPicInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPicInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserSharePicInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserSharePicInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUserSharePicInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMyPicInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMyPicInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetMyPicInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdatePicInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PICID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="PIC_NAME" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="FROM_ABLUM" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="CONTENT" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdatePicInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UpdatePicInfoResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdatePicAlbum">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PID" type="tns:ArrayOfInt" />
+            <s:element minOccurs="1" maxOccurs="1" name="AID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdatePicAlbumResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdatePicAlbumResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdatePicPower">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PID" type="tns:ArrayOfInt" />
+            <s:element minOccurs="1" maxOccurs="1" name="AID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="POWER" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdatePicPowerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdatePicPowerResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSharePic">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PAGE" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSharePicResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSharePicResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserShare">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PAGE" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserShareResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUserShareResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserPicList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PAGE" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="ABLUM" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserPicListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUserPicListResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IsOnline">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="USERNAME" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IsOnlineResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="IsOnlineResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddTag">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="TAG" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddTagResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddTagResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DelTag">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="TID" type="tns:ArrayOfInt" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DelTagResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DelTagResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TagList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TagListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TagListResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="HelloWorldSoapIn">
+    <wsdl:part name="parameters" element="tns:HelloWorld" />
+  </wsdl:message>
+  <wsdl:message name="HelloWorldSoapOut">
+    <wsdl:part name="parameters" element="tns:HelloWorldResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetRegisterCodeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetRegisterCode" />
+  </wsdl:message>
+  <wsdl:message name="GetRegisterCodeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetRegisterCodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="LoginSoapIn">
+    <wsdl:part name="parameters" element="tns:Login" />
+  </wsdl:message>
+  <wsdl:message name="LoginSoapOut">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="RegisterSoapIn">
+    <wsdl:part name="parameters" element="tns:Register" />
+  </wsdl:message>
+  <wsdl:message name="RegisterSoapOut">
+    <wsdl:part name="parameters" element="tns:RegisterResponse" />
+  </wsdl:message>
+  <wsdl:message name="RegisterRegisterSoapHeader">
+    <wsdl:part name="RegisterSoapHeader" element="tns:RegisterSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="LoginOutSoapIn">
+    <wsdl:part name="parameters" element="tns:LoginOut" />
+  </wsdl:message>
+  <wsdl:message name="LoginOutSoapOut">
+    <wsdl:part name="parameters" element="tns:LoginOutResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdataUserInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdataUserInfo" />
+  </wsdl:message>
+  <wsdl:message name="UpdataUserInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdataUserInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdataUserInfoUpdateSoapHeader">
+    <wsdl:part name="UpdateSoapHeader" element="tns:UpdateSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="ValidateEmail_GetCodeSoapIn">
+    <wsdl:part name="parameters" element="tns:ValidateEmail_GetCode" />
+  </wsdl:message>
+  <wsdl:message name="ValidateEmail_GetCodeSoapOut">
+    <wsdl:part name="parameters" element="tns:ValidateEmail_GetCodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ValidateEmail_PutCodeSoapIn">
+    <wsdl:part name="parameters" element="tns:ValidateEmail_PutCode" />
+  </wsdl:message>
+  <wsdl:message name="ValidateEmail_PutCodeSoapOut">
+    <wsdl:part name="parameters" element="tns:ValidateEmail_PutCodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="PasswordResetUrlSoapIn">
+    <wsdl:part name="parameters" element="tns:PasswordResetUrl" />
+  </wsdl:message>
+  <wsdl:message name="PasswordResetUrlSoapOut">
+    <wsdl:part name="parameters" element="tns:PasswordResetUrlResponse" />
+  </wsdl:message>
+  <wsdl:message name="PasswordResetSoapIn">
+    <wsdl:part name="parameters" element="tns:PasswordReset" />
+  </wsdl:message>
+  <wsdl:message name="PasswordResetSoapOut">
+    <wsdl:part name="parameters" element="tns:PasswordResetResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchSoapIn">
+    <wsdl:part name="parameters" element="tns:Search" />
+  </wsdl:message>
+  <wsdl:message name="SearchSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchPicSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchPic" />
+  </wsdl:message>
+  <wsdl:message name="SearchPicSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchPicResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddFriendSoapIn">
+    <wsdl:part name="parameters" element="tns:AddFriend" />
+  </wsdl:message>
+  <wsdl:message name="AddFriendSoapOut">
+    <wsdl:part name="parameters" element="tns:AddFriendResponse" />
+  </wsdl:message>
+  <wsdl:message name="DelFriendSoapIn">
+    <wsdl:part name="parameters" element="tns:DelFriend" />
+  </wsdl:message>
+  <wsdl:message name="DelFriendSoapOut">
+    <wsdl:part name="parameters" element="tns:DelFriendResponse" />
+  </wsdl:message>
+  <wsdl:message name="FriendsListSoapIn">
+    <wsdl:part name="parameters" element="tns:FriendsList" />
+  </wsdl:message>
+  <wsdl:message name="FriendsListSoapOut">
+    <wsdl:part name="parameters" element="tns:FriendsListResponse" />
+  </wsdl:message>
+  <wsdl:message name="EvaPicSoapIn">
+    <wsdl:part name="parameters" element="tns:EvaPic" />
+  </wsdl:message>
+  <wsdl:message name="EvaPicSoapOut">
+    <wsdl:part name="parameters" element="tns:EvaPicResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetEvaPicSoapIn">
+    <wsdl:part name="parameters" element="tns:GetEvaPic" />
+  </wsdl:message>
+  <wsdl:message name="GetEvaPicSoapOut">
+    <wsdl:part name="parameters" element="tns:GetEvaPicResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateAblumSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateAblum" />
+  </wsdl:message>
+  <wsdl:message name="CreateAblumSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateAblumResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteAblumSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteAblum" />
+  </wsdl:message>
+  <wsdl:message name="DeleteAblumSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteAblumResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateAblumSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateAblum" />
+  </wsdl:message>
+  <wsdl:message name="UpdateAblumSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateAblumResponse" />
+  </wsdl:message>
+  <wsdl:message name="MyAlbumListSoapIn">
+    <wsdl:part name="parameters" element="tns:MyAlbumList" />
+  </wsdl:message>
+  <wsdl:message name="MyAlbumListSoapOut">
+    <wsdl:part name="parameters" element="tns:MyAlbumListResponse" />
+  </wsdl:message>
+  <wsdl:message name="MyAblumListSoapIn">
+    <wsdl:part name="parameters" element="tns:MyAblumList" />
+  </wsdl:message>
+  <wsdl:message name="MyAblumListSoapOut">
+    <wsdl:part name="parameters" element="tns:MyAblumListResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadPic_2SoapIn">
+    <wsdl:part name="parameters" element="tns:UploadPic_2" />
+  </wsdl:message>
+  <wsdl:message name="UploadPic_2SoapOut">
+    <wsdl:part name="parameters" element="tns:UploadPic_2Response" />
+  </wsdl:message>
+  <wsdl:message name="RemovePicsSoapIn">
+    <wsdl:part name="parameters" element="tns:RemovePics" />
+  </wsdl:message>
+  <wsdl:message name="RemovePicsSoapOut">
+    <wsdl:part name="parameters" element="tns:RemovePicsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPicInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPicInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetPicInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPicInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUserSharePicInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUserSharePicInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetUserSharePicInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserSharePicInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMyPicInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMyPicInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetMyPicInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMyPicInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdatePicInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdatePicInfo" />
+  </wsdl:message>
+  <wsdl:message name="UpdatePicInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdatePicInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdatePicAlbumSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdatePicAlbum" />
+  </wsdl:message>
+  <wsdl:message name="UpdatePicAlbumSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdatePicAlbumResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdatePicPowerSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdatePicPower" />
+  </wsdl:message>
+  <wsdl:message name="UpdatePicPowerSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdatePicPowerResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSharePicSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSharePic" />
+  </wsdl:message>
+  <wsdl:message name="GetSharePicSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSharePicResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUserShareSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUserShare" />
+  </wsdl:message>
+  <wsdl:message name="GetUserShareSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserShareResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUserPicListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUserPicList" />
+  </wsdl:message>
+  <wsdl:message name="GetUserPicListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserPicListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IsOnlineSoapIn">
+    <wsdl:part name="parameters" element="tns:IsOnline" />
+  </wsdl:message>
+  <wsdl:message name="IsOnlineSoapOut">
+    <wsdl:part name="parameters" element="tns:IsOnlineResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddTagSoapIn">
+    <wsdl:part name="parameters" element="tns:AddTag" />
+  </wsdl:message>
+  <wsdl:message name="AddTagSoapOut">
+    <wsdl:part name="parameters" element="tns:AddTagResponse" />
+  </wsdl:message>
+  <wsdl:message name="DelTagSoapIn">
+    <wsdl:part name="parameters" element="tns:DelTag" />
+  </wsdl:message>
+  <wsdl:message name="DelTagSoapOut">
+    <wsdl:part name="parameters" element="tns:DelTagResponse" />
+  </wsdl:message>
+  <wsdl:message name="TagListSoapIn">
+    <wsdl:part name="parameters" element="tns:TagList" />
+  </wsdl:message>
+  <wsdl:message name="TagListSoapOut">
+    <wsdl:part name="parameters" element="tns:TagListResponse" />
+  </wsdl:message>
+  <wsdl:portType name="AblumServiceSoap">
+    <wsdl:operation name="HelloWorld">
+      <wsdl:input message="tns:HelloWorldSoapIn" />
+      <wsdl:output message="tns:HelloWorldSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRegisterCode">
+      <wsdl:input message="tns:GetRegisterCodeSoapIn" />
+      <wsdl:output message="tns:GetRegisterCodeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">登陆</wsdl:documentation>
+      <wsdl:input message="tns:LoginSoapIn" />
+      <wsdl:output message="tns:LoginSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Register">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">注册,服务获得验证信息，并存放于请求头中</wsdl:documentation>
+      <wsdl:input message="tns:RegisterSoapIn" />
+      <wsdl:output message="tns:RegisterSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="LoginOut">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">下线</wsdl:documentation>
+      <wsdl:input message="tns:LoginOutSoapIn" />
+      <wsdl:output message="tns:LoginOutSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdataUserInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">用户信息修改</wsdl:documentation>
+      <wsdl:input message="tns:UpdataUserInfoSoapIn" />
+      <wsdl:output message="tns:UpdataUserInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateEmail_GetCode">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">获得邮箱验证代码，到邮箱取</wsdl:documentation>
+      <wsdl:input message="tns:ValidateEmail_GetCodeSoapIn" />
+      <wsdl:output message="tns:ValidateEmail_GetCodeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateEmail_PutCode">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">验证邮箱</wsdl:documentation>
+      <wsdl:input message="tns:ValidateEmail_PutCodeSoapIn" />
+      <wsdl:output message="tns:ValidateEmail_PutCodeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PasswordResetUrl">
+      <wsdl:input message="tns:PasswordResetUrlSoapIn" />
+      <wsdl:output message="tns:PasswordResetUrlSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PasswordReset">
+      <wsdl:input message="tns:PasswordResetSoapIn" />
+      <wsdl:output message="tns:PasswordResetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Search">
+      <wsdl:input message="tns:SearchSoapIn" />
+      <wsdl:output message="tns:SearchSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchPic">
+      <wsdl:input message="tns:SearchPicSoapIn" />
+      <wsdl:output message="tns:SearchPicSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddFriend">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">关注好友</wsdl:documentation>
+      <wsdl:input message="tns:AddFriendSoapIn" />
+      <wsdl:output message="tns:AddFriendSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DelFriend">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">取消关注</wsdl:documentation>
+      <wsdl:input message="tns:DelFriendSoapIn" />
+      <wsdl:output message="tns:DelFriendSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FriendsList">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">好友列表</wsdl:documentation>
+      <wsdl:input message="tns:FriendsListSoapIn" />
+      <wsdl:output message="tns:FriendsListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EvaPic">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">回复</wsdl:documentation>
+      <wsdl:input message="tns:EvaPicSoapIn" />
+      <wsdl:output message="tns:EvaPicSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEvaPic">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">取得图片回复列表</wsdl:documentation>
+      <wsdl:input message="tns:GetEvaPicSoapIn" />
+      <wsdl:output message="tns:GetEvaPicSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateAblum">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">创建专辑</wsdl:documentation>
+      <wsdl:input message="tns:CreateAblumSoapIn" />
+      <wsdl:output message="tns:CreateAblumSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAblum">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">删除专辑</wsdl:documentation>
+      <wsdl:input message="tns:DeleteAblumSoapIn" />
+      <wsdl:output message="tns:DeleteAblumSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateAblum">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">修改专辑的信息</wsdl:documentation>
+      <wsdl:input message="tns:UpdateAblumSoapIn" />
+      <wsdl:output message="tns:UpdateAblumSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MyAlbumList">
+      <wsdl:input message="tns:MyAlbumListSoapIn" />
+      <wsdl:output message="tns:MyAlbumListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MyAblumList">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">我的专辑列表</wsdl:documentation>
+      <wsdl:input message="tns:MyAblumListSoapIn" />
+      <wsdl:output message="tns:MyAblumListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadPic_2">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">批量图片上传</wsdl:documentation>
+      <wsdl:input message="tns:UploadPic_2SoapIn" />
+      <wsdl:output message="tns:UploadPic_2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RemovePics">
+      <wsdl:input message="tns:RemovePicsSoapIn" />
+      <wsdl:output message="tns:RemovePicsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPicInfo">
+      <wsdl:input message="tns:GetPicInfoSoapIn" />
+      <wsdl:output message="tns:GetPicInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserSharePicInfo">
+      <wsdl:input message="tns:GetUserSharePicInfoSoapIn" />
+      <wsdl:output message="tns:GetUserSharePicInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMyPicInfo">
+      <wsdl:input message="tns:GetMyPicInfoSoapIn" />
+      <wsdl:output message="tns:GetMyPicInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePicInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">修改图片信息16,***隐患***,FROM_ABLUM不修改为-1，其他不修改为null</wsdl:documentation>
+      <wsdl:input message="tns:UpdatePicInfoSoapIn" />
+      <wsdl:output message="tns:UpdatePicInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePicAlbum">
+      <wsdl:input message="tns:UpdatePicAlbumSoapIn" />
+      <wsdl:output message="tns:UpdatePicAlbumSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePicPower">
+      <wsdl:input message="tns:UpdatePicPowerSoapIn" />
+      <wsdl:output message="tns:UpdatePicPowerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSharePic">
+      <wsdl:input message="tns:GetSharePicSoapIn" />
+      <wsdl:output message="tns:GetSharePicSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserShare">
+      <wsdl:input message="tns:GetUserShareSoapIn" />
+      <wsdl:output message="tns:GetUserShareSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserPicList">
+      <wsdl:input message="tns:GetUserPicListSoapIn" />
+      <wsdl:output message="tns:GetUserPicListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="IsOnline">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">我是否在线?</wsdl:documentation>
+      <wsdl:input message="tns:IsOnlineSoapIn" />
+      <wsdl:output message="tns:IsOnlineSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddTag">
+      <wsdl:input message="tns:AddTagSoapIn" />
+      <wsdl:output message="tns:AddTagSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DelTag">
+      <wsdl:input message="tns:DelTagSoapIn" />
+      <wsdl:output message="tns:DelTagSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TagList">
+      <wsdl:input message="tns:TagListSoapIn" />
+      <wsdl:output message="tns:TagListSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AblumServiceSoap" type="tns:AblumServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap:operation soapAction="http://tempuri.org/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRegisterCode">
+      <soap:operation soapAction="http://tempuri.org/GetRegisterCode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://tempuri.org/Login" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Register">
+      <soap:operation soapAction="http://tempuri.org/Register" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:RegisterRegisterSoapHeader" part="RegisterSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoginOut">
+      <soap:operation soapAction="http://tempuri.org/LoginOut" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdataUserInfo">
+      <soap:operation soapAction="http://tempuri.org/UpdataUserInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:UpdataUserInfoUpdateSoapHeader" part="UpdateSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateEmail_GetCode">
+      <soap:operation soapAction="http://tempuri.org/ValidateEmail_GetCode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateEmail_PutCode">
+      <soap:operation soapAction="http://tempuri.org/ValidateEmail_PutCode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PasswordResetUrl">
+      <soap:operation soapAction="http://tempuri.org/PasswordResetUrl" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PasswordReset">
+      <soap:operation soapAction="http://tempuri.org/PasswordReset" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Search">
+      <soap:operation soapAction="http://tempuri.org/Search" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchPic">
+      <soap:operation soapAction="http://tempuri.org/SearchPic" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddFriend">
+      <soap:operation soapAction="http://tempuri.org/AddFriend" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DelFriend">
+      <soap:operation soapAction="http://tempuri.org/DelFriend" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FriendsList">
+      <soap:operation soapAction="http://tempuri.org/FriendsList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EvaPic">
+      <soap:operation soapAction="http://tempuri.org/EvaPic" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEvaPic">
+      <soap:operation soapAction="http://tempuri.org/GetEvaPic" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateAblum">
+      <soap:operation soapAction="http://tempuri.org/CreateAblum" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAblum">
+      <soap:operation soapAction="http://tempuri.org/DeleteAblum" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateAblum">
+      <soap:operation soapAction="http://tempuri.org/UpdateAblum" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MyAlbumList">
+      <soap:operation soapAction="http://tempuri.org/MyAlbumList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MyAblumList">
+      <soap:operation soapAction="http://tempuri.org/MyAblumList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadPic_2">
+      <soap:operation soapAction="http://tempuri.org/UploadPic_2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemovePics">
+      <soap:operation soapAction="http://tempuri.org/RemovePics" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPicInfo">
+      <soap:operation soapAction="http://tempuri.org/GetPicInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserSharePicInfo">
+      <soap:operation soapAction="http://tempuri.org/GetUserSharePicInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMyPicInfo">
+      <soap:operation soapAction="http://tempuri.org/GetMyPicInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePicInfo">
+      <soap:operation soapAction="http://tempuri.org/UpdatePicInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePicAlbum">
+      <soap:operation soapAction="http://tempuri.org/UpdatePicAlbum" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePicPower">
+      <soap:operation soapAction="http://tempuri.org/UpdatePicPower" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSharePic">
+      <soap:operation soapAction="http://tempuri.org/GetSharePic" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserShare">
+      <soap:operation soapAction="http://tempuri.org/GetUserShare" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserPicList">
+      <soap:operation soapAction="http://tempuri.org/GetUserPicList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsOnline">
+      <soap:operation soapAction="http://tempuri.org/IsOnline" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddTag">
+      <soap:operation soapAction="http://tempuri.org/AddTag" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DelTag">
+      <soap:operation soapAction="http://tempuri.org/DelTag" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TagList">
+      <soap:operation soapAction="http://tempuri.org/TagList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="AblumServiceSoap12" type="tns:AblumServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap12:operation soapAction="http://tempuri.org/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRegisterCode">
+      <soap12:operation soapAction="http://tempuri.org/GetRegisterCode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap12:operation soapAction="http://tempuri.org/Login" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Register">
+      <soap12:operation soapAction="http://tempuri.org/Register" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:RegisterRegisterSoapHeader" part="RegisterSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoginOut">
+      <soap12:operation soapAction="http://tempuri.org/LoginOut" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdataUserInfo">
+      <soap12:operation soapAction="http://tempuri.org/UpdataUserInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:UpdataUserInfoUpdateSoapHeader" part="UpdateSoapHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateEmail_GetCode">
+      <soap12:operation soapAction="http://tempuri.org/ValidateEmail_GetCode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateEmail_PutCode">
+      <soap12:operation soapAction="http://tempuri.org/ValidateEmail_PutCode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PasswordResetUrl">
+      <soap12:operation soapAction="http://tempuri.org/PasswordResetUrl" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PasswordReset">
+      <soap12:operation soapAction="http://tempuri.org/PasswordReset" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Search">
+      <soap12:operation soapAction="http://tempuri.org/Search" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchPic">
+      <soap12:operation soapAction="http://tempuri.org/SearchPic" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddFriend">
+      <soap12:operation soapAction="http://tempuri.org/AddFriend" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DelFriend">
+      <soap12:operation soapAction="http://tempuri.org/DelFriend" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FriendsList">
+      <soap12:operation soapAction="http://tempuri.org/FriendsList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EvaPic">
+      <soap12:operation soapAction="http://tempuri.org/EvaPic" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEvaPic">
+      <soap12:operation soapAction="http://tempuri.org/GetEvaPic" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateAblum">
+      <soap12:operation soapAction="http://tempuri.org/CreateAblum" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAblum">
+      <soap12:operation soapAction="http://tempuri.org/DeleteAblum" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateAblum">
+      <soap12:operation soapAction="http://tempuri.org/UpdateAblum" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MyAlbumList">
+      <soap12:operation soapAction="http://tempuri.org/MyAlbumList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MyAblumList">
+      <soap12:operation soapAction="http://tempuri.org/MyAblumList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadPic_2">
+      <soap12:operation soapAction="http://tempuri.org/UploadPic_2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemovePics">
+      <soap12:operation soapAction="http://tempuri.org/RemovePics" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPicInfo">
+      <soap12:operation soapAction="http://tempuri.org/GetPicInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserSharePicInfo">
+      <soap12:operation soapAction="http://tempuri.org/GetUserSharePicInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMyPicInfo">
+      <soap12:operation soapAction="http://tempuri.org/GetMyPicInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePicInfo">
+      <soap12:operation soapAction="http://tempuri.org/UpdatePicInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePicAlbum">
+      <soap12:operation soapAction="http://tempuri.org/UpdatePicAlbum" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePicPower">
+      <soap12:operation soapAction="http://tempuri.org/UpdatePicPower" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSharePic">
+      <soap12:operation soapAction="http://tempuri.org/GetSharePic" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserShare">
+      <soap12:operation soapAction="http://tempuri.org/GetUserShare" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserPicList">
+      <soap12:operation soapAction="http://tempuri.org/GetUserPicList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsOnline">
+      <soap12:operation soapAction="http://tempuri.org/IsOnline" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddTag">
+      <soap12:operation soapAction="http://tempuri.org/AddTag" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DelTag">
+      <soap12:operation soapAction="http://tempuri.org/DelTag" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TagList">
+      <soap12:operation soapAction="http://tempuri.org/TagList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AblumService">
+    <wsdl:port name="AblumServiceSoap" binding="tns:AblumServiceSoap">
+      <soap:address location="http://localhost:86/AblumService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="AblumServiceSoap12" binding="tns:AblumServiceSoap12">
+      <soap12:address location="http://localhost:86/AblumService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

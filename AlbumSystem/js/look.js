@@ -1,0 +1,158 @@
+﻿
+/*获取一个用户节点*/
+function getUserE(UID, userName, email,src) {
+    var div = document.createElement('div');
+    div.className = 'media';
+
+    var div_a = document.createElement('a');
+    div_a.className = 'pull-left';
+    var div_a_img = document.createElement('img');
+    div_a_img.src = src;//头像路径
+    div_a_img.className = 'media-object';
+    div_a_img.style.width = '64px';
+    div_a_img.style.height = '64px';
+    div_a.appendChild(div_a_img);
+
+    div.appendChild(div_a);
+
+    var div_div = document.createElement('div');
+    div_div.className = 'media-body';
+    var div_div_btn = document.createElement('button');
+    div_div_btn.type = 'button';
+    div_div_btn.className = 'btn btn-primary btn-xs pull-right';
+    div_div_btn.innerHTML = '取消关注';
+    div_div_btn.setAttribute('onclick', 'unlook(this);');
+    div_div_btn.setAttribute('uid', UID);//UID
+
+    div_div.appendChild(div_div_btn);
+
+    var div_div_h3 = document.createElement('h3');
+    div_div_h3.className = 'media-heading';
+    var div_div_h3_a = document.createElement('a');
+    div_div_h3_a.innerHTML = userName;//用户名
+    div_div_h3_a.href = "mailto:#";
+    div_div_h3_a.setAttribute('onclick', 'return false;');
+
+    div_div_h3.appendChild(div_div_h3_a);
+    div_div.appendChild(div_div_h3);
+
+    var div_div_a = document.createElement('a');
+    div_div_a.href = 'mailto:#';
+    div_div_a.innerHTML = email;//Email
+    div_div_a.setAttribute('onclick', 'return false;');
+
+    div_div.appendChild(div_div_a);
+    div.appendChild(div_div);
+
+    return div;
+}
+
+/*按下取消关注按钮*/
+function unlook(e)
+{
+    var flag = e;
+    flag.setAttribute('id', 'flag');
+    $('#UnLook').modal('show');
+}
+function unlookActive()
+{
+    var uid = document.getElementById('flag').getAttribute('uid');
+    var data = new FormData();
+    data.append('uid', uid);
+
+    var xmlrequest = getXmlHttpRequest();
+    xmlrequest.open('post', 'Ashx/UnLook.ashx', true);
+    xmlrequest.onreadystatechange = function () {
+        if (xmlrequest.readyState == 4 && xmlrequest.status == 200) {
+            //alert(xmlrequest.responseText);
+            
+            if (xmlrequest.responseText == '-1') {
+                $('#Lose').modal('show');
+                $('#UnLook').modal('hide');
+            }
+            else {
+                //var media = document.getElementById('flag').parentNode.parentNode;
+                //var div = media.parentNode.removeChild(media);
+                $('#Success').modal('show');
+                $('#UnLook').modal('hide');
+                changePageActive(sessionStorage.page);
+                buildPage(sessionStorage.pageCount, sessionStorage.page, 'return changePage(this)');
+            }
+            flag.id = '';
+        }
+    }
+    xmlrequest.send(data);
+}
+
+
+function changePageActive(_page)
+{
+    setLoadingNode();
+    sessionStorage.page = _page;
+    console.warn(_page);
+
+    var data = new FormData();
+    data.append('page', _page);
+
+    var xmlrequest = getXmlHttpRequest();
+    xmlrequest.open("post", "Ashx/MyLook.ashx", true);
+    xmlrequest.onreadystatechange = function () {
+        if (xmlrequest.readyState == 4 && xmlrequest.status == 200) {
+            var xml = xmlrequest.responseText;
+            //alert(xml);
+            var xmlDom = getXML(xml);
+            var root = xmlDom.documentElement;
+            sessionStorage.pageCount = (root.getElementsByTagName('FriendListPageCount')[0]).childNodes[0].nodeValue;
+            var FriendList = root.getElementsByTagName('FriendList')[0];
+            //alert(pageCount);
+            LA.innerHTML = '';
+            LB.innerHTML = '';
+            LC.innerHTML = '';
+            var E = function (j) {
+                switch (j) {
+                    case 0: { return document.getElementById('LA'); };
+                    case 1: { return document.getElementById('LB'); };
+                    case 2: { return document.getElementById('LC'); };
+                }
+            };
+            //建立结果页面
+            for (var i = 0, j = 0 ; i < FriendList.childNodes.length ; i++, j = (j + 1) % 3) {
+                var user = FriendList.childNodes[i];
+                var UID = getXmlNodeValue(user.getElementsByTagName('UID')[0]);
+                var USERNAME = getXmlNodeValue(user.getElementsByTagName('USERNAME')[0]);
+                var EMAIL = getXmlNodeValue(user.getElementsByTagName('EMAIL')[0]);
+                var EPIC =/* 'data:image/jpeg;base64,' + */getXmlNodeValue(user.getElementsByTagName('PIC')[0]);
+                var MIN = E(j);
+                MIN.appendChild(getUserE(UID, USERNAME, EMAIL,EPIC));
+            }
+            buildPage(sessionStorage.pageCount, sessionStorage.page, 'return changePage(this)');
+        }
+    }
+    xmlrequest.send(data);
+}
+
+window.onload = function () {
+    changePageActive(Number(1));
+}
+
+
+function removeLoadingNode() {
+    LA.removeChild(LoadA);
+    LB.removeChild(LoadB);
+    LC.removeChild(LoadC);
+    //LoadA.remove();
+    //LoadB.remove();
+    //LoadC.remove();
+}
+function setLoadingNode() {
+    LA.appendChild(loadingNode('LoadA'));
+    LB.appendChild(loadingNode('LoadB'));
+    LC.appendChild(loadingNode('LoadC'));
+}
+function loadingNode(id) {
+    var L = document.createElement('div');
+    L.setAttribute('id', id);
+    L.className = 'thumbnail';
+    L.innerHTML = '<span class="glyphicon glyphicon-refresh tagLoading"></span>  Loading...';
+    return L;
+}

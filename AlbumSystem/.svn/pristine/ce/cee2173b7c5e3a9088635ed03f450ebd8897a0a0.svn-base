@@ -1,0 +1,74 @@
+﻿window.onload = function () {
+    var searchGo = document.getElementById('searchGo');
+    var actionText = document.getElementById('actionText');
+
+    searchGo.setAttribute('value', 1);
+    actionText.innerHTML = '图片<span class="caret"></span>';
+
+    changePageActive(1);
+    buildPage(pageCount, 1, 'return changePage(this)');
+}
+
+
+function changePageActive(_page) {
+    //console.warn(_page);
+    var search = request('keyword');
+    if (search.length > 0) {
+
+        var data = new FormData();
+        data.append('keyword', search);
+        data.append('page', _page);
+
+        var xmlrequest = getXmlHttpRequest();
+        xmlrequest.open("post", "Ashx/SearchPic.ashx", true);
+        xmlrequest.onreadystatechange = function () {
+            if (xmlrequest.readyState == 4 && xmlrequest.status == 200) {
+                var xml = xmlrequest.responseText;
+                //alert(xml);
+                var xmlDom = getXML(xml);
+                var root = xmlDom.documentElement;
+                pageCount = (root.getElementsByTagName('SearchPicPageCount')[0]).innerHTML;
+                var Share = root.getElementsByTagName('SearchPic')[0];
+
+                var E = function () {
+                    var Min = PA.offsetHeight <= PB.offsetHeight ? PA : PB;
+                    Min = Min.offsetHeight <= PC.offsetHeight ? Min : PC;
+                    Min = Min.offsetHeight <= PD.offsetHeight ? Min : PD;
+                    Min = Min.offsetHeight <= PE.offsetHeight ? Min : PE;
+                    Min = Min.offsetHeight <= PF.offsetHeight ? Min : PF;
+                    return Min;
+
+                };
+                //建立结果页面
+                for (var i = 0 ; i < Share.childNodes.length ; i++) {
+                    var user = Share.childNodes[i];
+                    var PID = user.getElementsByTagName('PID')[0].innerHTML;
+                    var PNAME = user.getElementsByTagName('PNAME')[0].innerHTML;
+                    var PTIME = user.getElementsByTagName('PTIME')[0].innerHTML;
+                    var PDES = user.getElementsByTagName('PDES')[0].innerHTML;
+                    var PDATA = user.getElementsByTagName('PDATA')[0].innerHTML;
+                    var MIN = E();
+                    MIN.appendChild(getPic(PID, PNAME, PTIME, PDES, PDATA));
+                }
+            }
+        }
+        xmlrequest.send(data);
+    }
+}
+
+/*读取URL中get参数*/
+function request(strParame) {
+    var args = new Object();
+    var query = location.search.substring(1);
+
+    var pairs = query.split("&"); // Break at ampersand 
+    for (var i = 0; i < pairs.length; i++) {
+        var pos = pairs[i].indexOf('=');
+        if (pos == -1) continue;
+        var argname = pairs[i].substring(0, pos);
+        var value = pairs[i].substring(pos + 1);
+        value = decodeURIComponent(value);
+        args[argname] = value;
+    }
+    return args[strParame];
+}

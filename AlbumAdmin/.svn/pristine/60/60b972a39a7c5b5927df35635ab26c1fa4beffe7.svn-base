@@ -1,0 +1,58 @@
+﻿@using DB_Service;
+@model AlbumAdmin.Models.Admin.ListModel<a_evaluation>
+
+@{
+    ViewBag.Title = "EvaList";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<h3>回复列表</h3>
+
+<div>
+    <table class="table table-striped table-bordered table-hover table-responsive">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>发言用户</th>
+                <th>图片</th>
+                <th>回复时间</th>
+                <th>内容</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (a_evaluation a in Model.List)
+            {
+                <tr>
+                    <td>@a.e_id</td>
+                    <td>@a.e_uid</td>
+                    <td>@a.e_upid</td>
+                    <td>@a.e_time</td>
+                    <td>@a.e_evaluation</td>
+                    <td><a href="/Admin/Delete?id=@a.e_id&Page=@Model.Page&type=EvaList" onclick="return OK()">删除</a></td>
+                </tr> 
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    <a href="/Admin/EvaList?Page=@(Model.Page - 1)">上一页</a>
+    <a href="/Admin/EvaList?Page=@(Model.Page + 1)">下一页</a>
+    当前 
+    @Model.Page
+    页/共
+    @Model.PageCount 页
+    <select id="goPage">
+        @for (int i = 1; i <= Model.Page; i++)
+        {
+            <option value="@i">@i</option>
+        }
+    </select>
+    <a href="" onclick="return Page(this)">跳转</a>
+</div>
+
+<script>
+    function Page(e) {
+        e.href = '/Admin/EvaList?Page=' + goPage.value;
+    }
+</script>

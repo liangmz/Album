@@ -1,0 +1,123 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/HD.master" AutoEventWireup="true" CodeFile="Search.aspx.cs" Inherits="Search" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+    <script src="js/search.js"></script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="BODY" Runat="Server">
+
+
+        <div class="row">
+        <div class="col-lg-4" id="LA">
+            <!--<div class="media">
+                <a class="pull-left" href="mailto:#">
+                    <img src="#" alt="X" class="media-object" style="width: 64px; height: 64px;" />
+                </a>
+                <div class="media-body">
+                    <button type="button" onclick="look(this);" UID="33"  class="btn btn-primary btn-sm pull-right">关注</button>
+                    <h3 class="media-heading">
+                        <a href="mailto:#">Demo</a>
+                    </h3>
+                    <a href="mailto:#">Demo@demo.com</a>
+                </div>
+            </div>
+            <div class="media">
+                <a class="pull-left" href="mailto:#">
+                    <img src="#" alt="X" class="media-object" style="width: 64px; height: 64px;" />
+                </a>
+                <div class="media-body">
+                    <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary btn-sm pull-right">关注</button>
+                    <h3 class="media-heading">
+                        <a href="mailto:#">UserName</a>
+                    </h3>
+                    <a href="mailto:#">userName@126.com</a>
+                </div>
+            </div>-->
+        </div>
+        <div class="col-lg-4" id="LB">
+            <!--<div class="media">
+                <a class="pull-left" href="mailto:#">
+                    <img src="#" alt="X" class="media-object" style="width: 64px; height: 64px;" />
+                </a>
+                <div class="media-body">
+                   <button type="button" onclick="look(this);" UID="33" class="btn btn-primary btn-sm pull-right">关注</button>
+                    <h3 class="media-heading">
+                        <a href="mailto:#">UserName</a>
+                    </h3>
+                    <a href="mailto:#">userName@userName.com</a>
+                </div>
+            </div>-->
+        </div>
+        <div class="col-lg-4" id="LC">
+            <!--<div class="media">
+                <a class="pull-left" href="mailto:#">
+                    <img src="#" alt="X" class="media-object" style="width: 64px; height: 64px;" />
+                </a>
+                <div class="media-body">
+                    <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary btn-sm pull-right">关注</button>
+                    <h3 class="media-heading">
+                        <a href="mailto:#">UserName</a>
+                    </h3>
+                    <a href="mailto:#">userName@126.com</a>
+                </div>
+            </div>
+            <div class="media">
+                <a class="pull-left" href="mailto:#">
+                    <img src="#" alt="X" class="media-object" style="width: 64px; height: 64px;" />
+                </a>
+                <div class="media-body">
+                    <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary btn-sm pull-right">关注</button>
+                    <h3 class="media-heading">
+                        <a href="mailto:#">UserName</a>
+                    </h3>
+                    <a href="mailto:#">userName@126.com</a>
+                </div>
+            </div>
+            <div class="media">
+                <a class="pull-left" href="mailto:#">
+                    <img src="#" alt="X" class="media-object" style="width: 64px; height: 64px;" />
+                </a>
+                <div class="media-body">
+                    <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary btn-sm pull-right">关注</button>
+                    <h3 class="media-heading">
+                        <a href="mailto:#">UserName</a>
+                    </h3>
+                    <a href="mailto:#">userName@126.com</a>
+                </div>
+            </div>-->
+        </div>
+
+    </div>
+    <!--
+    <ul class="pagination" id="page">
+        <li class="disabled"><a >&laquo;</a></li>
+        <li class="active"><span>1<span class="sr-only">(current)</span></span></li>
+        <li><a href="mailto:#" onclick="return changePage(this)">2</a></li>
+        <li><a href="mailto:#" onclick="return changePage(this)">3</a></li>
+        <li><a href="mailto:#" onclick="return changePage(this)">4</a></li>
+        <li><a href="">&raquo;</a></li>
+    </ul>
+    -->
+    <div class="modal fade" id="Look" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <br />
+                    <br />
+                    <center>
+                       <span class="glyphicon glyphicon-question-sign"></span>
+                       <h4>确定关注?</h4>
+                       </center>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="lookActive();" class="btn btn-primary">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</asp:Content>
+

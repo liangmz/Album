@@ -1,0 +1,357 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using MySql.Data.MySqlClient;
+using MySql.Data;
+using System.Data;
+using System.Xml;
+
+/// <summary>
+/// DBlink 的摘要说明
+/// </summary>
+public class DBCreateDelete : IDisposable
+{
+    private MySqlConnection CON = null;
+    private MySqlCommand COM = null;
+
+
+    public DBCreateDelete()
+    {
+        CON = DBOpen.GetCon();
+        COM = new MySqlCommand();
+    }
+
+    public void Dispose()
+    {
+        COM.Dispose();
+        if (CON.State == ConnectionState.Open) CON.Close();
+    }
+
+    /// <summary>
+    /// 表a_tag插入一条数据
+    /// </summary>
+    /// <param name="PID"></param>
+    /// <param name="TAGNAME"></param>
+    /// <returns></returns>
+    public int InsertPicTag(int PID, String TAGNAME)
+    {
+        try
+        {
+            String SQL = "insert into a_tag values(default,'" + TAGNAME + "'," + PID + ");";
+            if (_ExecuteSQL(SQL) != 0)
+            {
+                SQL = "select last_insert_id();";
+                return Convert.ToInt32( _ExecuteSQL_One(SQL));
+            }
+            return 0;
+        }
+        catch (Exception)
+        { return -1; }
+    }
+
+    /// <summary>
+    /// 表a_tag删除一条数据
+    /// </summary>
+    /// <param name="PID"></param>
+    /// <param name="TID"></param>
+    /// <returns></returns>
+    public int DeletePicTag(int PID, int TID)
+    {
+        try
+        {
+            String SQL = "delete from a_tag where t_id = " + TID + " and t_upid = " + PID + ";";
+            return _ExecuteSQL(SQL);
+        }
+        catch (Exception) { return -1; }
+    }
+
+    static public int InsertPicture2(String[] PNAME, int AID, String[] FILEMD5, string[] PATH,int POWER)
+    {
+        try
+        {
+            int COUNT = 0;
+            String[] SQL = new String[PNAME.Length];
+            for (int i = 0; i < PNAME.Length; i++)
+            {
+                SQL[i] = "call ADDPIC (" + AID + ",'" + PNAME[i] + "'," + POWER + ",'" + FILEMD5[i] + "','" + PATH[i] + "','');";
+            }
+            COUNT = ExecuteSQL_2(SQL);
+            return COUNT;
+        }
+        catch (Exception)
+        {
+            return -1;
+        }
+    }
+    static public int InsertPicture(String PNAME,int AID,String FILEMD5, String PATH)
+    {
+        try {
+            string SQL = "call ADDPIC (" + AID + ",'" + PNAME + "','" + FILEMD5 + "','" + PATH + "','');";
+            ExecuteSQL(SQL);
+            return 1;
+        }
+        catch (Exception) { 
+            return -1; 
+        }
+    }
+
+    static public int DeleteMyPic(int PID)
+    {
+        try
+        {
+            String SQL = "DELETE FROM a_upicture WHERE up_id = " + PID + ";";
+            return ExecuteSQL(SQL);
+        }
+        catch (Exception)
+        {
+            return -1;
+        }
+    }
+    static public int DeleteMyPics(int[] PID)
+    {
+        //int count = 0;
+        String SQL = "";
+        for (int i = 0; i < PID.Length; i++)
+        {
+            try
+            {
+                SQL += "DELETE FROM a_upicture WHERE up_id = " + PID[i] + ";";
+                //count += ExecuteSQL(SQL);
+            }
+            catch (Exception)
+            { }
+        }
+        return ExecuteSQL(SQL);
+    }
+    
+
+    static public int InsertEvaluation(int UID,int PID,String CONTENT)
+    {
+        try {
+            String SQL = "INSERT INTO a_evaluation VALUES (default," + UID + "," + PID + ",default,'" + CONTENT + "');";
+            return ExecuteSQL(SQL);
+        }
+        catch (Exception) {
+            return -1;
+        }
+    }
+
+    static public int DeleteRelatin(int UID, int FID)
+    {
+        try
+        {
+            String SQL = "DELETE FROM a_relation WHERE r_my = " + UID +" and r_friend = "+ FID +";";
+            return ExecuteSQL(SQL);
+        }
+        catch (Exception)
+        {
+            return -1;
+        }
+    }
+
+    static public int InsertRelation(int UID,int FID)
+    {
+        try
+        {
+            String SQL = "INSERT INTO a_relation VALUES(default," + UID + "," + FID + ")";
+            return ExecuteSQL(SQL);
+        }
+        catch (Exception)
+        {
+            return -1;
+        }
+    }
+
+    static public int InsertUser(String USERNAME, String PASSWORD, String EMAIL, String VCODE)
+    {
+        try
+        {
+            String[] SQLDATA = new String[6];
+            SQLDATA[0] = "default";
+            SQLDATA[1] = GetValues(USERNAME);
+            SQLDATA[2] = GetValues(PASSWORD);
+            SQLDATA[3] = GetValues(EMAIL);
+            SQLDATA[4] = GetValues(VCODE);
+            SQLDATA[5] = "default";
+            String SQL = getInsertSQL("a_user", SQLDATA);
+            //String SQL = "insert into a_user values(default,'" + USERNAME + "','" + PASSWORD + "','" + EMAIL + "','" + VCODE + "',default);";
+            return ExecuteSQL(SQL);;
+        }
+        catch (Exception)
+        {
+            return -1;
+        }
+    }
+
+    static public int UpdateUser(String USERNAME, String PASSWORD, String EMAIL, String VCODE, int PIC)
+    {
+        try
+        {
+            String SQL = "Update a_user";
+            bool FLAG = false;
+            if (PASSWORD != null)
+            {
+                SQL += " set u_password = '" + PASSWORD + "'";
+                FLAG = true;
+            }
+            if (EMAIL != null)
+            {
+                if (FLAG)
+                {
+                    SQL += ",";
+                }
+                SQL += " u_email = '" + EMAIL + "'";
+            }
+            SQL += " where u_userName = '" + USERNAME + "';";
+            return ExecuteSQL(SQL);;
+        }
+        catch (Exception)
+        {
+            return -1;
+        }
+    }
+
+    static public int UpdateUserVCODE(String USERNAME)
+    {
+        try
+        {
+            String SQL = "UPDATE A_USER SET u_Code where u_userName = '" + USERNAME + "';";
+            return ExecuteSQL(SQL);
+        }
+        catch (Exception)
+        {
+            return -1;
+        }
+    }
+
+    static public int CreateAblum(String ABLUMNAME, int UID)
+    {
+        try {
+            String SQL = "INSERT INTO A_ABLUM VALUES(default,'" + ABLUMNAME + "'," + UID + ",default,default);";
+            return ExecuteSQL(SQL);
+        }
+        catch (Exception)
+        {
+            return -1;
+        }
+    }
+
+    static public int DeleteAblum(String ABLUMNAME, int UID)
+    {
+        try {
+            String SQL = "DELETE FROM A_ABLUM WHERE a_name = '" + ABLUMNAME + "' AND a_uid = " + UID + ";";
+            return ExecuteSQL(SQL);
+        }
+        catch (Exception)
+        {
+            return -1;
+        }
+    }
+
+    static public int UpdateAblum(int UID, String ABLUMNAME)
+    {
+        try {
+            String SQL = "UPDATE A_ABLUM SET a_name = '" +ABLUMNAME+"' WHERE a_uid = '" + UID +"';";
+            return ExecuteSQL(SQL);
+        }
+        catch (Exception)
+        {
+            return -1;
+        }
+    }
+
+    static public String getInsertSQL(String TABLE, String[] DATA)
+    {
+        String SQL = "insert into " + TABLE + " values(";
+        SQL += DATA[0];
+        for (int I = 1; I < DATA.Length; I++)
+        {
+            SQL += "," + DATA[I];
+        }
+        SQL += ");";
+        return SQL;
+    }
+
+    static public String GetValues(String VALUE)
+    {
+        if (VALUE == null)
+            return VALUE;
+        VALUE = "'" + VALUE + "'";
+        return VALUE;
+    }
+
+    static private int ExecuteSQL(String SQL)
+    {
+        try
+        {
+            MySqlConnection CON = DBOpen.GetCon();
+            MySqlCommand COM = new MySqlCommand();
+            CON.Open();
+            COM.CommandText = SQL;
+            COM.Connection = CON;
+            int COUNT = COM.ExecuteNonQuery();
+            COM.Dispose();
+            CON.Close();
+            return COUNT;
+        }
+        catch (Exception)
+        {
+            return -1;
+        }
+    }
+    static private int ExecuteSQL_2(String[] SQL)
+    {
+        try
+        {
+            int COUNT = 0;
+            MySqlConnection CON = DBOpen.GetCon();
+            MySqlCommand COM = new MySqlCommand();
+            CON.Open();
+            COM.Connection = CON;
+            for (int i = 0; i < SQL.Length; i++)
+            {
+                COM.CommandText = SQL[i];
+                try
+                {
+                    COUNT += COM.ExecuteNonQuery();
+                }
+                catch (Exception) { continue; }
+            }
+            COM.Dispose();
+            CON.Close();
+            return COUNT;
+        }
+        catch (Exception)
+        {
+            return 0;
+        }
+    }
+
+    public int _ExecuteSQL(String SQL)
+    {
+        try
+        {
+            if (CON.State != ConnectionState.Open) CON.Open();
+            COM.Connection = CON;
+            COM.CommandText = SQL;
+            return COM.ExecuteNonQuery();
+        }
+        catch (Exception) { }
+        return 0;
+
+    }
+
+    public object _ExecuteSQL_One(String SQL)
+    {
+        try
+        {
+            if (CON.State != ConnectionState.Open) CON.Open();
+            COM.Connection = CON;
+            COM.CommandText = SQL;
+            return COM.ExecuteScalar();
+        }
+        catch (Exception) { }
+        return null;
+    }
+}

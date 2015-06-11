@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Album</title>
+
+    <script src="@Url.Content("~/Content/dist/js/jquery.js")"></script>
+    <link rel="stylesheet" media="screen"  href="~/Content/dist/css/bootstrap.min.css"/>
+    <script src="@Url.Content("~/Content/dist/js/bootstrap.min.js")"></script>
+
+    <link href="~/Content/Layout.css" rel="stylesheet" />
+    <script src="~/Content/js/js.js"></script>
+</head>
+<body>
+    
+    <div class="List bs-sidebar hidden-print affix" role="complementary"">
+        <div class="Header">
+        <h2>管理员</h2>
+    </div>
+        <ul style="list-style:none;" class="nav bs-sidenav">
+            <li><a href="/Admin/UserList">用户列表</a></li>
+            <li><a href="/Admin/AlbumList">相集列表</a> </li>
+            <li><a href="/Admin/UPicList">用户相片列表</a></li>
+            <li><a href="/Admin/PicList">图片数据列表</a></li>
+            <li><a href="/Admin/EvaList">回复列表</a></li>
+        </ul>
+    </div>
+    <div class="Content">
+        @RenderBody()
+    </div>
+</body>
+</html>

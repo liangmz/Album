@@ -1,0 +1,35 @@
+﻿@model AlbumAdmin.Models.Admin.LoginModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body>
+    @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+    {
+        <div>
+            <span>登录名</span><input type="text" name="loginName" placeholder="用户名" />
+        </div>
+        <div>
+            <span>密码</span><input type="password" name="password" placeholder="密码" />
+        </div>
+        
+        <div>
+            <button type="submit">Login</button>
+        </div>
+        <div>
+            @if (Model != null)
+            {
+                <label style="color:#f00">@Model.error</label>
+            }
+        </div>
+    }
+</body>
+</html>

@@ -1,0 +1,66 @@
+﻿@using DB_Service;
+@model AlbumAdmin.Models.Admin.ListModel<a_upicture>
+
+
+@{
+    ViewBag.Title = "UpicList";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<h3>用户图片列表</h3>
+
+<div>
+    <table class="table table-striped table-bordered table-hover table-responsive">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>图片名</th>
+                <th>权限</th>
+                <th>上传时间</th>
+                <th>图片数据id</th>
+                <th>回复数量</th>
+                <th>相集id</th>
+                <th>描述</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int I=1;}
+            @foreach (a_upicture a in Model.List)
+            {
+                <tr>
+                    <td>@a.up_id</td>
+                    <td>@a.up_name</td>
+                    <td>@a.up_power</td>
+                    <td>@a.up_uploadTime</td>
+                    <td>@a.up_pid</td>
+                    <td><a href="/Admin/EvaList?PID=@a.up_id">@a.up_evaCount</a></td>
+                    <td>@a.up_abid</td>
+                    <td>@a.up_description</td>
+                    <td><a href="/Admin/Delete?id=@a.up_id&Page=@Model.Page&type=UpicList" onclick="return OK()">删除</a></td>
+                </tr> 
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    <a href="/Admin/UpicList?Page=@(Model.Page - 1)&AID=@Model.AID">上一页</a>
+    <a href="/Admin/UpicList?Page=@(Model.Page + 1)&AID=@Model.AID">下一页</a>
+    当前 
+    @Model.Page
+    页/共
+    @Model.PageCount 页
+    <select id="goPage">
+        @for (int i = 1; i <= Model.Page; i++)
+        {
+            <option value="@i">@i</option>
+        }
+    </select>
+    <a href="" onclick="return Page(this)">跳转</a>
+</div>
+
+<script>
+    function Page(e) {
+        e.href = '/Admin/'+@Model.action+'?Page=' + goPage.value+'&AID=@Model.AID';
+    }
+</script>

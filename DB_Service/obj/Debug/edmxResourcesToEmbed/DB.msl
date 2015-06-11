@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ablumModelStoreContainer" CdmEntityContainer="ablumEntities">
+    <EntitySetMapping Name="a_ablum">
+      <EntityTypeMapping TypeName="ablumModel.a_ablum">
+        <MappingFragment StoreEntitySet="a_ablum">
+          <ScalarProperty Name="a_id" ColumnName="a_id" />
+          <ScalarProperty Name="a_name" ColumnName="a_name" />
+          <ScalarProperty Name="a_uid" ColumnName="a_uid" />
+          <ScalarProperty Name="a_createTime" ColumnName="a_createTime" />
+          <ScalarProperty Name="a_count" ColumnName="a_count" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="a_evaluation">
+      <EntityTypeMapping TypeName="ablumModel.a_evaluation">
+        <MappingFragment StoreEntitySet="a_evaluation">
+          <ScalarProperty Name="e_id" ColumnName="e_id" />
+          <ScalarProperty Name="e_uid" ColumnName="e_uid" />
+          <ScalarProperty Name="e_upid" ColumnName="e_upid" />
+          <ScalarProperty Name="e_time" ColumnName="e_time" />
+          <ScalarProperty Name="e_evaluation" ColumnName="e_evaluation" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="a_picture">
+      <EntityTypeMapping TypeName="ablumModel.a_picture">
+        <MappingFragment StoreEntitySet="a_picture">
+          <ScalarProperty Name="p_id" ColumnName="p_id" />
+          <ScalarProperty Name="p_code" ColumnName="p_code" />
+          <ScalarProperty Name="p_path" ColumnName="p_path" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="a_relation">
+      <EntityTypeMapping TypeName="ablumModel.a_relation">
+        <MappingFragment StoreEntitySet="a_relation">
+          <ScalarProperty Name="r_id" ColumnName="r_id" />
+          <ScalarProperty Name="r_my" ColumnName="r_my" />
+          <ScalarProperty Name="r_friend" ColumnName="r_friend" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="a_tag">
+      <EntityTypeMapping TypeName="ablumModel.a_tag">
+        <MappingFragment StoreEntitySet="a_tag">
+          <ScalarProperty Name="t_id" ColumnName="t_id" />
+          <ScalarProperty Name="t_name" ColumnName="t_name" />
+          <ScalarProperty Name="t_upid" ColumnName="t_upid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="a_upicture">
+      <EntityTypeMapping TypeName="ablumModel.a_upicture">
+        <MappingFragment StoreEntitySet="a_upicture">
+          <ScalarProperty Name="up_id" ColumnName="up_id" />
+          <ScalarProperty Name="up_name" ColumnName="up_name" />
+          <ScalarProperty Name="up_pid" ColumnName="up_pid" />
+          <ScalarProperty Name="up_abid" ColumnName="up_abid" />
+          <ScalarProperty Name="up_power" ColumnName="up_power" />
+          <ScalarProperty Name="up_uploadTime" ColumnName="up_uploadTime" />
+          <ScalarProperty Name="up_evaCount" ColumnName="up_evaCount" />
+          <ScalarProperty Name="up_description" ColumnName="up_description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="a_user">
+      <EntityTypeMapping TypeName="ablumModel.a_user">
+        <MappingFragment StoreEntitySet="a_user">
+          <ScalarProperty Name="u_id" ColumnName="u_id" />
+          <ScalarProperty Name="u_userName" ColumnName="u_userName" />
+          <ScalarProperty Name="u_password" ColumnName="u_password" />
+          <ScalarProperty Name="u_Email" ColumnName="u_Email" />
+          <ScalarProperty Name="u_Code" ColumnName="u_Code" />
+          <ScalarProperty Name="u_pic" ColumnName="u_pic" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

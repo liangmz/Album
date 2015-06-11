@@ -1,0 +1,60 @@
+﻿@model AlbumAdmin.Models.Admin.LoginModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+
+    <script src="@Url.Content("~/Content/dist/js/jquery.js")"></script>
+    <link rel="stylesheet" media="screen" href="~/Content/dist/css/bootstrap.min.css" />
+    <script src="@Url.Content("~/Content/dist/js/bootstrap.min.js")"></script>
+
+</head>
+<body>
+    <style type="text/css">
+        .login {
+            width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 100px;
+        }
+
+        .temp {
+            margin: 10px;
+        }
+    </style>
+    <div class="login">
+        @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+        {
+            <div class="temp">
+                <span>登录名</span>
+            </div>
+            <div class="temp">
+                <input type="text" name="loginName" placeholder="用户名" />
+            </div>
+            <div class="temp">
+                <span>密码</span>
+            </div>
+            <div class="temp">
+                <input type="password" name="password" placeholder="密码" />
+            </div>
+        
+            <div class="temp">
+                <button type="submit">Login</button>
+            </div>
+            <div class="temp">
+                @if (Model != null)
+                {
+                    <label style="color: #f00">@Model.error</label>
+                }
+            </div>
+        }
+    </div>
+</body>
+</html>

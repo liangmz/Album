@@ -1,0 +1,310 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="HD.master.cs" Inherits="HD" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Album</title>
+    <script src="dist/js/jquery.js"></script>
+    <link rel="stylesheet" href="dist/css/bootstrap.min.css" media="screen" />
+
+    <script src="dist/js/bootstrap.min.js"></script>
+    
+
+    <!-- 最新 Bootstrap 核心 CSS 文件 -->
+    <%--<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css" />
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap-theme.min.css" />
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>--%>
+
+    <link href="css/mycss.css" rel="stylesheet" />
+    <script src="js/master.js"></script>
+    
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+
+    <link rel="Shortcut Icon" href="Image/Logo.ico" />
+    <!--地址栏和标签上显示图标-->
+    <link rel="Bookmark" href="Image/Logo.ico" />
+    <!--收藏夹显示图标-->
+
+</head>
+<body>
+    <div id="wrap">
+        <nav id="_header" class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="Default.aspx">Album</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li id="HA"><a href="Default.aspx">共享</a></li>
+                        <li id="HB"><a href="UserShare.aspx">关注共享</a></li>
+                        <li id="HC"><a href="Look.aspx">关注用户</a></li>
+                        <li id="HD"><a href="MyAblum.aspx">我的专辑</a></li>
+                    </ul>
+                    <form name="search" onsubmit="return checkKeyword(searchGo,this);" class="navbar-form navbar-left" role="search" action="Search.aspx" method="get">
+                        <div class="form-group open">
+                            <input type="text" name="keyword" class="form-control" placeholder="Search" required value="<%=Request["keyword"]!=null?Request["keyword"].ToString():"" %>" />
+                        </div>
+                        <div class="btn-group">
+                            <button id="actionText" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">图片<span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:void(0);" value="1" onclick="buttonDownMenuAction(this, document.getElementById('searchGo'),document.getElementById('actionText'));">图片</a></li>
+                                <li><a href="javascript:void(0);" value="0" onclick="buttonDownMenuAction(this,document.getElementById('searchGo'),document.getElementById('actionText'));">用户</a></li>
+                                
+                            </ul>
+                        </div>
+                        <button id="searchGo" type="submit" class="btn btn-primary" value="1">Search</button>
+                    </form>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li id="fat-menu" class="dropdown">
+                            <a href="javascript:void(0);" class="navbar-brand dropdown-toggle" id="userName" role="button" data-toggle="dropdown" runat="server"></a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
+                                <li role="presentation"><a role="menuitem" tabindex="-1" data-toggle="modal" data-target="#MyInfo" href="javascipt:void(0);">邮箱验证</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="Infomation.aspx">修改信息</a></li>
+                                <li role="presentation" class="divider"></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" onclick="LoginOut();">下线</a></li>
+                            </ul>
+                        </li>
+                        <li><a id="login" href="javascript:void(0);" class="navbar-brand" data-toggle="modal" data-target="#Login">登陆</a></li>
+                        <li><a id="register" href="javascript:void(0);" class="navbar-brand" onclick="getRegister();">注册</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+
+        <div id="" style="height: 70px;"></div>
+
+        <div class="modal fade" id="Login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">登陆</h4>
+                    </div>
+                    <div class="modal-body form-horizontal">
+                        <form id="f_login" role="form" onsubmit="return Login();">
+                            <div class="form-group">
+                                <label for="uname" class="col-sm-3 control-label">UserName</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="uname" placeholder="UserName" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="col-sm-3 control-label">Password</label>
+                                <div class="col-sm-6">
+                                    <input type="password" class="form-control" id="password" placeholder="Password" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-6">
+                                    <a style="line-height: 33px" class="pull-right" href="ForgetPassword.aspx">忘记密码?</a>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" id="loginCheckBox" />
+                                            Remember me
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label"></label>
+                                <div class="col-sm-3">
+                                    <button type="submit" class="btn btn-primary">Sign in</button>
+                                </div>
+                            </div>
+                            <button type="submit" style="display: none;">Sign in</button>
+
+                            <div class="progress progress-striped active" style="margin-left: 9%; margin-right: 8%; width: 65%">
+                                <div id="barInfo" class="progress-bar progress-bar-info active" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="Register" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="H1">注册</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <form id="f_register" class="form-horizontal" role="form" onsubmit="return register();">
+                            <div class="form-group">
+                                <label for="usname" class="col-sm-3 control-label">用户名</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="usname" placeholder="6-16位字母、数字" pattern="[A-Za-z0-9]{6,16}" title="6-16位字母、数字" required>
+                                </div>
+                                <span class="glyphicon glyphicon-cog  control-label col-sm-1"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="r_password" class="col-sm-3 control-label">密码</label>
+                                <div class="col-sm-6">
+                                    <input type="password" class="form-control" id="r_password" placeholder="6-16位字母、数字" pattern="[A-Za-z0-9]{6,16}" title="6-16位字母、数字" required>
+                                </div>
+                                <span class="glyphicon glyphicon-cog  control-label col-sm-1"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="r_password2" class="col-sm-3 control-label">密码确认</label>
+                                <div class="col-sm-6">
+                                    <input type="password" class="form-control" id="r_password2" placeholder="6-16位字母、数字" pattern="[A-Za-z0-9]{6,16}" title="6-16位字母、数字" required>
+                                </div>
+                                <span class="glyphicon glyphicon-cog  control-label col-sm-1"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="r_email" class="col-sm-3 control-label">Email</label>
+                                <div class="col-sm-6">
+                                    <input type="email" class="form-control" id="r_email" placeholder="正确邮箱" required>
+                                </div>
+                                <span class="glyphicon glyphicon-cog  control-label col-sm-1"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="r_code" class="col-sm-3 control-label">验证码</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="r_code" placeholder="" required>
+                                </div>
+                                <span class="glyphicon glyphicon-cog  control-label col-sm-1"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="input3" class="col-sm-3 control-label"></label>
+                                <div class="col-sm-3">
+                                    <img id="vPic" style="height: 33px;" class="img-thumbnail" src="#" alt="X">
+                                </div>
+                                <div class="col-xs-3">
+                                    <a style="line-height: 33px" href="#" onclick="changeValiPic();">看不清</a>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input4" class="col-sm-3 control-label"></label>
+                                <div class="col-sm-6">
+                                    <button type="submit" class="btn btn-primary">Register</button>
+                                    <button type="reset" class="btn btn-primary">Reset</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="MyInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="H2">信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-inline">
+                            <button type="button" class="btn btn-danger" onclick="ValiEmail();">邮箱验证</button>
+                            <span id="DeleteAlbumLoading"  style="display:none;margin-top: 10px;"> <span class="glyphicon glyphicon-refresh tagLoading" ></span> Loading...</span>
+                            <p id="valiEmailText" style="margin-top: 10px;"></p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container">
+            <asp:ContentPlaceHolder ID="BODY" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+        <div class="container">
+            <ul class="pagination" id="page">
+            </ul>
+        </div>
+
+    </div>
+    <div style="height: 10px;">
+        <p id="a"></p>
+        <p id="b"></p>
+        <p id="c"></p>
+    </div>
+    <div id="footer">
+        <div class="container">
+            <p><a href="http://getbootstrap.com/">Bootstrap</a></p>
+            <p><a href="http://glyphicons.com/">Glyphicons</a></p>
+            <p><a href="mailto:liang_mz@126.com">liang_mz@126.com</a></p>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="Success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <br />
+                    <br />
+                    <center>
+                       <span class="glyphicon glyphicon-ok"></span>
+                       <h4>成功!</h4>
+                       </center>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="$('#Success').modal('hide');" class="btn btn-primary">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="Lose" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <br />
+                    <br />
+                    <center>
+                       <span class="glyphicon glyphicon-remove"></span>
+                       <h4>失败#</h4>
+                       </center>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="$('#Lose').modal('hide');" class="btn btn-primary">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

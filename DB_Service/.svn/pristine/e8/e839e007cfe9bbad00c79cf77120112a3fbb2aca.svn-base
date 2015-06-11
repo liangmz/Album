@@ -1,0 +1,39 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using DB_Service;
+
+namespace DB_Service.Service
+{
+    public class a_ablumService : Service<a_ablum>
+    {
+        public IQueryable<a_ablum> List(int Page, out int PageCount, int Count)
+        {
+            IQueryable<a_ablum> T = Table();
+            PageCount = GetPageCount(T.Count(), Count);
+            return T.OrderBy(A => A.a_id).Skip((Page - 1) * Count < 0 ? 0 : (Page - 1) * Count).Take(Count);
+        }
+        public IQueryable<a_ablum> UserList(int UID, int Page, out int PageCount, int Count)
+        {
+            IQueryable<a_ablum> T = Table().Where(A => A.a_id == UID);
+            PageCount = GetPageCount(T.Count(), Count);
+            return T.OrderBy(A => A.a_id).Skip((Page - 1) * Count < 0 ? 0 : (Page - 1) * Count).Take(Count);
+        }
+        public bool Delete(int ID)
+        {
+            try
+            {
+                a_ablum AU = AE.a_ablum.First(A => A.a_id == ID);
+                AE.a_ablum.Remove(AU);
+                if (AE.SaveChanges() > 0)
+                {
+                    return true;
+                }
+            }
+            catch (Exception) { }
+            return false;
+        }
+    }
+}

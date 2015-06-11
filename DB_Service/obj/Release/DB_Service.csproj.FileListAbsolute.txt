@@ -1,0 +1,11 @@
+F:\MyProjectOrDemo\C#\Ablum\DB_Service\bin\Release\DB_Service.dll.config
+F:\MyProjectOrDemo\C#\Ablum\DB_Service\bin\Release\DB_Service.dll
+F:\MyProjectOrDemo\C#\Ablum\DB_Service\bin\Release\DB_Service.pdb
+F:\MyProjectOrDemo\C#\Ablum\DB_Service\bin\Release\EntityFramework.dll
+F:\MyProjectOrDemo\C#\Ablum\DB_Service\bin\Release\MySql.Data.Entity.EF5.dll
+F:\MyProjectOrDemo\C#\Ablum\DB_Service\bin\Release\MySql.Data.Entity.EF6.dll
+F:\MyProjectOrDemo\C#\Ablum\DB_Service\bin\Release\EntityFramework.xml
+F:\MyProjectOrDemo\C#\Ablum\DB_Service\bin\Release\zh-Hans\EntityFramework.resources.dll
+F:\MyProjectOrDemo\C#\Ablum\DB_Service\obj\Release\DB_Service.csprojResolveAssemblyReference.cache
+F:\MyProjectOrDemo\C#\Ablum\DB_Service\obj\Release\DB_Service.dll
+F:\MyProjectOrDemo\C#\Ablum\DB_Service\obj\Release\DB_Service.pdb

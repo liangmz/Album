@@ -1,0 +1,382 @@
+-- --------------------------------------------------------
+-- 主机:                           127.0.0.1
+-- 服务器版本:                        5.6.17 - MySQL Community Server (GPL)
+-- 服务器操作系统:                      Win64
+-- HeidiSQL 版本:                  8.3.0.4694
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+-- 导出 ablum 的数据库结构
+CREATE DATABASE IF NOT EXISTS `ablum` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `ablum`;
+
+
+-- 导出  过程 ablum.ADDPIC 结构
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ADDPIC`(IN `AID` INT, IN `PNAME` VARCHAR(256), IN `PPOWER` INT, IN `FILEMD5` VARCHAR(32), IN `PATH` VARCHAR(512), IN `DES` VARCHAR(512))
+begin
+declare PIDINDEX int default -1;
+declare AIDINDEX int default -1;
+select a_id into AIDINDEX from a_ablum where a_id = AID;
+
+if AIDINDEX <> -1 then
+select p_id into PIDINDEX from a_picture where p_code = FILEMD5;
+
+if PIDINDEX = -1 then
+insert into a_picture values(default,FILEMD5,PATH);
+select last_insert_id() into PIDINDEX ;
+end if;
+
+insert into a_upicture values(default,PNAME,PIDINDEX,AID,PPOWER,default,default,DES);
+select last_insert_id() as 'up_id';
+else
+
+select AIDINDEX;
+
+end if;
+
+end//
+DELIMITER ;
+
+
+-- 导出  表 ablum.a_ablum 结构
+CREATE TABLE IF NOT EXISTS `a_ablum` (
+  `a_id` int(11) NOT NULL AUTO_INCREMENT,
+  `a_name` varchar(64) NOT NULL,
+  `a_uid` int(11) NOT NULL,
+  `a_createTime` datetime DEFAULT CURRENT_TIMESTAMP,
+  `a_count` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`a_id`),
+  UNIQUE KEY `a_uid` (`a_uid`,`a_name`),
+  CONSTRAINT `a_ablum_ibfk_1` FOREIGN KEY (`a_uid`) REFERENCES `a_user` (`u_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 数据导出被取消选择。
+
+
+-- 导出  表 ablum.a_evaluation 结构
+CREATE TABLE IF NOT EXISTS `a_evaluation` (
+  `e_id` int(11) NOT NULL AUTO_INCREMENT,
+  `e_uid` int(11) NOT NULL,
+  `e_upid` int(11) NOT NULL,
+  `e_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `e_evaluation` varchar(512) NOT NULL,
+  PRIMARY KEY (`e_id`),
+  KEY `e_upid` (`e_upid`),
+  KEY `e_uid` (`e_uid`),
+  CONSTRAINT `a_evaluation_ibfk_1` FOREIGN KEY (`e_upid`) REFERENCES `a_upicture` (`up_id`),
+  CONSTRAINT `a_evaluation_ibfk_2` FOREIGN KEY (`e_uid`) REFERENCES `a_user` (`u_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 数据导出被取消选择。
+
+
+-- 导出  表 ablum.a_picture 结构
+CREATE TABLE IF NOT EXISTS `a_picture` (
+  `p_id` int(11) NOT NULL AUTO_INCREMENT,
+  `p_code` varchar(32) NOT NULL,
+  `p_path` varchar(512) DEFAULT NULL,
+  PRIMARY KEY (`p_id`),
+  UNIQUE KEY `p_code` (`p_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 数据导出被取消选择。
+
+
+-- 导出  表 ablum.a_relation 结构
+CREATE TABLE IF NOT EXISTS `a_relation` (
+  `r_id` int(11) NOT NULL AUTO_INCREMENT,
+  `r_my` int(11) NOT NULL,
+  `r_friend` int(11) NOT NULL,
+  PRIMARY KEY (`r_id`),
+  KEY `r_my` (`r_my`),
+  KEY `r_frient` (`r_friend`),
+  CONSTRAINT `a_relation_ibfk_1` FOREIGN KEY (`r_my`) REFERENCES `a_user` (`u_id`),
+  CONSTRAINT `a_relation_ibfk_2` FOREIGN KEY (`r_friend`) REFERENCES `a_user` (`u_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 数据导出被取消选择。
+
+
+-- 导出  表 ablum.a_tag 结构
+CREATE TABLE IF NOT EXISTS `a_tag` (
+  `t_id` int(11) NOT NULL AUTO_INCREMENT,
+  `t_name` varchar(64) NOT NULL,
+  `t_upid` int(11) NOT NULL,
+  PRIMARY KEY (`t_id`),
+  UNIQUE KEY `t_name` (`t_name`,`t_upid`),
+  KEY `t_upid` (`t_upid`),
+  CONSTRAINT `a_tag_ibfk_1` FOREIGN KEY (`t_upid`) REFERENCES `a_upicture` (`up_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 数据导出被取消选择。
+
+
+-- 导出  表 ablum.a_upicture 结构
+CREATE TABLE IF NOT EXISTS `a_upicture` (
+  `up_id` int(11) NOT NULL AUTO_INCREMENT,
+  `up_name` varchar(256) NOT NULL,
+  `up_pid` int(11) NOT NULL,
+  `up_abid` int(11) NOT NULL,
+  `up_power` int(11) NOT NULL DEFAULT '0',
+  `up_uploadTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `up_evaCount` int(11) NOT NULL DEFAULT '0',
+  `up_description` varchar(512) DEFAULT NULL,
+  PRIMARY KEY (`up_id`),
+  UNIQUE KEY `up_abid` (`up_abid`,`up_pid`),
+  KEY `up_pid` (`up_pid`),
+  CONSTRAINT `a_upicture_ibfk_1` FOREIGN KEY (`up_pid`) REFERENCES `a_picture` (`p_id`),
+  CONSTRAINT `a_upicture_ibfk_2` FOREIGN KEY (`up_abid`) REFERENCES `a_ablum` (`a_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 数据导出被取消选择。
+
+
+-- 导出  表 ablum.a_user 结构
+CREATE TABLE IF NOT EXISTS `a_user` (
+  `u_id` int(11) NOT NULL AUTO_INCREMENT,
+  `u_userName` varchar(32) NOT NULL,
+  `u_password` varchar(32) NOT NULL,
+  `u_Email` varchar(64) DEFAULT NULL,
+  `u_Code` varchar(128) DEFAULT NULL,
+  `u_pic` int(11) DEFAULT NULL,
+  PRIMARY KEY (`u_id`),
+  KEY `u_pic` (`u_pic`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 数据导出被取消选择。
+
+
+-- 导出  视图 ablum.friend_view 结构
+-- 创建临时表以解决视图依赖性错误
+CREATE TABLE `friend_view` (
+	`u_id` INT(11) NOT NULL,
+	`u_userName` VARCHAR(32) NOT NULL COLLATE 'utf8_general_ci',
+	`u_password` VARCHAR(32) NOT NULL COLLATE 'utf8_general_ci',
+	`u_Email` VARCHAR(64) NULL COLLATE 'utf8_general_ci',
+	`u_Code` VARCHAR(128) NULL COLLATE 'utf8_general_ci',
+	`u_pic` INT(11) NULL,
+	`up_id` INT(11) NOT NULL,
+	`up_name` VARCHAR(256) NOT NULL COLLATE 'utf8_general_ci',
+	`up_pid` INT(11) NOT NULL,
+	`up_abid` INT(11) NOT NULL,
+	`up_power` INT(11) NOT NULL,
+	`up_uploadTime` DATETIME NOT NULL,
+	`up_evaCount` INT(11) NOT NULL,
+	`up_description` VARCHAR(512) NULL COLLATE 'utf8_general_ci',
+	`p_id` INT(11) NOT NULL,
+	`p_code` VARCHAR(32) NOT NULL COLLATE 'utf8_general_ci',
+	`p_path` VARCHAR(512) NULL COLLATE 'utf8_general_ci'
+) ENGINE=MyISAM;
+
+
+-- 导出  视图 ablum.my_view 结构
+-- 创建临时表以解决视图依赖性错误
+CREATE TABLE `my_view` (
+	`u_id` INT(11) NOT NULL,
+	`u_userName` VARCHAR(32) NOT NULL COLLATE 'utf8_general_ci',
+	`a_id` INT(11) NOT NULL,
+	`a_name` VARCHAR(64) NOT NULL COLLATE 'utf8_general_ci',
+	`up_id` INT(11) NOT NULL,
+	`up_name` VARCHAR(256) NOT NULL COLLATE 'utf8_general_ci',
+	`up_uploadTime` DATETIME NOT NULL,
+	`up_description` VARCHAR(512) NULL COLLATE 'utf8_general_ci',
+	`p_path` VARCHAR(512) NULL COLLATE 'utf8_general_ci',
+	`u_p_path` VARCHAR(512) NULL COLLATE 'utf8_general_ci'
+) ENGINE=MyISAM;
+
+
+-- 导出  视图 ablum.relation_view 结构
+-- 创建临时表以解决视图依赖性错误
+CREATE TABLE `relation_view` (
+	`u_id` INT(11) NOT NULL,
+	`u_userName` VARCHAR(32) NOT NULL COLLATE 'utf8_general_ci',
+	`a_id` INT(11) NOT NULL,
+	`a_name` VARCHAR(64) NOT NULL COLLATE 'utf8_general_ci',
+	`up_id` INT(11) NOT NULL,
+	`up_name` VARCHAR(256) NOT NULL COLLATE 'utf8_general_ci',
+	`up_uploadTime` DATETIME NOT NULL,
+	`up_description` VARCHAR(512) NULL COLLATE 'utf8_general_ci',
+	`p_path` VARCHAR(512) NULL COLLATE 'utf8_general_ci',
+	`u_p_path` VARCHAR(512) NULL COLLATE 'utf8_general_ci'
+) ENGINE=MyISAM;
+
+
+-- 导出  视图 ablum.share_view 结构
+-- 创建临时表以解决视图依赖性错误
+CREATE TABLE `share_view` (
+	`u_id` INT(11) NOT NULL,
+	`u_userName` VARCHAR(32) NOT NULL COLLATE 'utf8_general_ci',
+	`a_id` INT(11) NOT NULL,
+	`a_name` VARCHAR(64) NOT NULL COLLATE 'utf8_general_ci',
+	`up_id` INT(11) NOT NULL,
+	`up_name` VARCHAR(256) NOT NULL COLLATE 'utf8_general_ci',
+	`up_uploadTime` DATETIME NOT NULL,
+	`up_description` VARCHAR(512) NULL COLLATE 'utf8_general_ci',
+	`p_path` VARCHAR(512) NULL COLLATE 'utf8_general_ci',
+	`u_p_path` VARCHAR(512) NULL COLLATE 'utf8_general_ci'
+) ENGINE=MyISAM;
+
+
+-- 导出  过程 ablum.UpdateUserPic 结构
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateUserPic`(IN `PCODE` VARCHAR(32), IN `PATH` VARCHAR(512))
+begin
+declare PIDINDEX int default -1;
+
+select p_id into PIDINDEX from a_picture where p_code = PCODE;
+if PIDINDEX = -1 then
+insert into a_picture values(default,PCODE,PATH);
+select last_insert_id() into PIDINDEX ;
+end if;
+select PIDINDEX;
+
+end//
+DELIMITER ;
+
+
+-- 导出  触发器 ablum.A_Ablum_Delete 结构
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `A_Ablum_Delete` BEFORE DELETE ON `a_ablum` FOR EACH ROW begin
+set @u_a = 1;
+delete from a_upicture where a_upicture.up_abid = old.a_id; 
+set @u_a = 0;
+end//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+
+-- 导出  触发器 ablum.A_Evaluation_Delete 结构
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `A_Evaluation_Delete` AFTER DELETE ON `a_evaluation` FOR EACH ROW begin
+
+if @a_is_delete is null or(@a_is_delete is not null and @a_is_delete <> 1 )then
+update A_UPicture set up_evaCount = up_evaCount - 1 where A_UPicture.up_id = old.e_upid;
+end if;
+
+end//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+
+-- 导出  触发器 ablum.A_Evaluation_Insert 结构
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `A_Evaluation_Insert` AFTER INSERT ON `a_evaluation` FOR EACH ROW begin
+
+update A_UPicture set up_evaCount = up_evaCount + 1 where up_id = new.e_upid;
+
+end//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+
+-- 导出  触发器 ablum.A_UPicture_Delete 结构
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `A_UPicture_Delete` AFTER DELETE ON `a_upicture` FOR EACH ROW begin
+if @u_a is null or (@u_a is not null and @u_a <> 1) then
+update A_Ablum set a_count = a_count - 1 where a_id = old.up_abid;
+end if;
+end//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+
+-- 导出  触发器 ablum.A_UPicture_Delete_A_Evaluation 结构
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `A_UPicture_Delete_A_Evaluation` BEFORE DELETE ON `a_upicture` FOR EACH ROW begin
+set @a_is_delete = 1;
+delete from A_Evaluation where A_Evaluation.e_upid = old.up_id;
+set @a_is_delete = 0;
+
+delete from A_Tag where A_Tag.t_upid = old.up_id;
+end//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+
+-- 导出  触发器 ablum.A_UPicture_Insert 结构
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `A_UPicture_Insert` AFTER INSERT ON `a_upicture` FOR EACH ROW begin
+update A_Ablum set a_count = a_count + 1 where a_id = new.up_abid;
+end//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+
+-- 导出  触发器 ablum.A_Upicture_Update 结构
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `A_Upicture_Update` AFTER UPDATE ON `a_upicture` FOR EACH ROW begin
+update A_Ablum set a_count = a_count + 1 where a_id = new.up_abid;
+update A_Ablum set a_count = a_count - 1 where a_id = old.up_abid;
+end//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+
+-- 导出  视图 ablum.friend_view 结构
+-- 移除临时表并创建最终视图结构
+DROP TABLE IF EXISTS `friend_view`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` VIEW `friend_view` AS select A_User.*,A_UPicture.*,A_Picture.*
+
+from A_User,A_Ablum,A_UPicture,A_Picture,A_Relation 
+
+where A_User.u_id = A_Relation.r_my and
+		A_Ablum.a_uid = A_Relation.r_friend and
+		A_Ablum.a_id = A_UPicture.up_abid and
+		A_UPicture.up_pid = A_Picture.p_id and
+		A_Upicture.up_power = 1 ;
+
+
+-- 导出  视图 ablum.my_view 结构
+-- 移除临时表并创建最终视图结构
+DROP TABLE IF EXISTS `my_view`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` VIEW `my_view` AS select A.u_id,A.u_userName,A_Ablum.a_id,A_Ablum.a_name,A_UPicture.up_id,A_UPicture.up_name,A_UPicture.up_uploadTime,A_UPicture.up_description,C.p_path,B.p_path AS u_p_path
+from A_Ablum,A_UPicture,A_Picture C,A_User A
+
+left join A_Picture B on B.p_id = A.u_pic
+
+where A_Ablum.a_uid = A.u_id and
+		A_Ablum.a_id = A_UPicture.up_abid and
+		A_UPicture.up_pid = C.p_id ;
+
+
+-- 导出  视图 ablum.relation_view 结构
+-- 移除临时表并创建最终视图结构
+DROP TABLE IF EXISTS `relation_view`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` VIEW `relation_view` AS select A.u_id,A.u_userName,A_Ablum.a_id,A_Ablum.a_name,A_UPicture.up_id,A_UPicture.up_name,A_UPicture.up_uploadTime,A_UPicture.up_description,C.p_path,B.p_path AS u_p_path
+from A_Ablum,A_UPicture,A_Picture C,A_User A
+
+left join A_Picture B on B.p_id = A.u_pic
+
+where A_Ablum.a_uid = A.u_id and
+		A_Ablum.a_id = A_UPicture.up_abid and
+		A_UPicture.up_pid = C.p_id and
+		A_UPicture.up_power = 1 ;
+
+
+-- 导出  视图 ablum.share_view 结构
+-- 移除临时表并创建最终视图结构
+DROP TABLE IF EXISTS `share_view`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` VIEW `share_view` AS select A.u_id,A.u_userName,A_Ablum.a_id,A_Ablum.a_name,A_UPicture.up_id,A_UPicture.up_name,A_UPicture.up_uploadTime,A_UPicture.up_description,C.p_path,B.p_path AS u_p_path
+from A_Ablum,A_UPicture,A_Picture C,A_User A
+
+left join A_Picture B on B.p_id = A.u_pic
+
+where A_Ablum.a_uid = A.u_id and
+		A_Ablum.a_id = A_UPicture.up_abid and
+		A_UPicture.up_pid = C.p_id and
+		A_UPicture.up_power = 0 ;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

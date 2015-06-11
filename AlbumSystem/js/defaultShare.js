@@ -1,0 +1,124 @@
+﻿
+window.onload = function () {
+
+    document.getElementById("HA").className = "active";
+    changePageActive(1);
+    document.getElementById('page').style.display = 'none';
+
+    LazyInit();
+}
+
+window.onscroll = function () {
+    var marginBot = 0;
+    var flag = false;
+    var height = getScreenBottomHeight();//当前可视区域底部到页面顶部的距离
+    if (document.compatMode === "CSS1Compat") {
+        marginBot = document.documentElement.scrollHeight - height;
+    } else {
+        marginBot = document.body.scrollHeight - height;
+    }
+
+    LazyLoad(height);
+
+    if (marginBot <= 300) {
+        if (Number(sessionStorage.page) < Number(sessionStorage.pageCount)) {// && Number(sessionStorage.page) % 10 != 0) {
+            sessionStorage.page = Number(sessionStorage.page) + Number(1);
+            changePageActive(sessionStorage.page);
+            //buildPage(sessionStorage.pageCount, sessionStorage.page, 'return changePage(this)');
+        }
+    }
+}
+
+/*获取可视区域底部到网页顶部高度*/
+function getScreenBottomHeight() {
+    if (document.compatMode === "CSS1Compat") {
+        return (Number(document.documentElement.scrollTop) + Number(document.body.scrollTop)) + Number(document.documentElement.clientHeight);
+    } else {
+        return Number(document.body.scrollTop) + Number(document.body.clientHeight);
+    }
+}
+
+function changePageActive(_page) {
+    sessionStorage.page = _page;
+    console.warn(_page);
+    var data = new FormData();
+    data.append('page', _page);
+
+    var xmlrequest = getXmlHttpRequest();
+    xmlrequest.open("post", "Ashx/Share.ashx", true);
+    xmlrequest.onreadystatechange = function () {
+        if (xmlrequest.readyState == 4 && xmlrequest.status == 200) {
+            var xml = xmlrequest.responseText;
+            xmlrequest = null;
+            //alert(xml);
+            var xmlDom = getXML(xml);
+            var root = xmlDom.documentElement;
+            sessionStorage.pageCount = getXmlNodeValue(root.getElementsByTagName('SharePageCount')[0]);
+            var Share = root.getElementsByTagName('Share')[0];
+
+            var E = function () {
+                var Min = PA.offsetHeight <= PB.offsetHeight ? PA : PB;
+                Min = Min.offsetHeight <= PC.offsetHeight ? Min : PC;
+                Min = Min.offsetHeight <= PD.offsetHeight ? Min : PD;
+                Min = Min.offsetHeight <= PE.offsetHeight ? Min : PE;
+                Min = Min.offsetHeight <= PF.offsetHeight ? Min : PF;
+                return Min;
+
+            };
+            removeLoadingNode();
+
+            //建立结果页面
+            if (Share != undefined) {
+                for (var i = 0 ; i < Share.childNodes.length ; i++) {
+                    try {
+                        var user = Share.childNodes[i];
+                        var PID = getXmlNodeValue(user.getElementsByTagName('PID')[0]);
+                        var PNAME = getXmlNodeValue(user.getElementsByTagName('PNAME')[0]);
+                        var PTIME = getXmlNodeValue(user.getElementsByTagName('PTIME')[0]);
+                        var PDES = getXmlNodeValue(user.getElementsByTagName('PDES')[0]);
+                        var PDATA = getXmlNodeValue(user.getElementsByTagName('PDATA')[0]);
+                        var MIN = E();
+                        MIN.appendChild(getPic(PID, PNAME, PTIME, PDES, PDATA));
+                    } catch (Ex) { continue; }
+                }
+            }
+            if (Number(sessionStorage.page) < Number(sessionStorage.pageCount)) {
+                setLoadingNode();
+            }
+            buildPage(sessionStorage.pageCount, sessionStorage.page, 'return changePage(this)');
+            LazyLoad(getScreenBottomHeight());
+        }
+    }
+    xmlrequest.send(data);
+}
+
+function removeLoadingNode() {
+    PA.removeChild(LA);
+    PB.removeChild(LB);
+    PC.removeChild(LC);
+    PD.removeChild(LD);
+    PE.removeChild(LE);
+    PF.removeChild(LF);
+
+    //LA.remove();ie 不支持这种方法
+    //LB.remove();
+    //LC.remove();
+    //LD.remove();
+    //LE.remove();
+    //LF.remove();
+}
+function setLoadingNode() {
+    PA.appendChild(loadingNode('LA'));
+    PB.appendChild(loadingNode('LB'));
+    PC.appendChild(loadingNode('LC'));
+    PD.appendChild(loadingNode('LD'));
+    PE.appendChild(loadingNode('LE'));
+    PF.appendChild(loadingNode('LF'));
+}
+function loadingNode(id) {
+    var L = document.createElement('div');
+    L.setAttribute('id', id);
+    L.className = 'thumbnail';
+    L.innerHTML = '<span class="glyphicon glyphicon-refresh tagLoading"></span>  Loading...';
+    return L;
+}

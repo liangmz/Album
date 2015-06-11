@@ -1,0 +1,232 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using AlbumAdmin.Models.Admin;
+using AlbumAdmin;
+using DB_Service;
+using DB_Service.Service;
+using System.Reflection;
+
+namespace AlbumAdmin.Controllers
+{
+    public class AdminController : Controller
+    {
+        private a_userService US = null;
+        private a_upictureService UPS = null;
+        private a_evaluationService ES = null;
+        private a_ablumService AS = null;
+        private a_pictureService PS = null;
+
+        public AdminController()
+        {
+            US = new a_userService();
+            UPS = new a_upictureService();
+            ES = new a_evaluationService();
+            AS = new a_ablumService();
+            PS = new a_pictureService();
+        }
+        //
+        // GET: /Admin/
+
+        public ActionResult Index()
+        {
+            if (LoginOn())
+            {
+                return View();
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        //public ActionResult List(ListTypeModel _Model)
+        //{
+        //    if (LoginOff())
+        //    {
+        //        string type = "UserList";
+        //        switch (_Model.type)
+        //        {
+        //            case "UserList": type = "a_user"; break;
+        //            case "AlbumList": type = "a_ablum"; break;
+        //            case "UpicList": type = "a_upicture"; break;
+        //            case "PicList": type = "a_picture"; break;
+        //        }
+        //        Type T = Type.GetType("a_user");
+        //        ListModel<typeof(Type.GetType("a_user")> Model = new ListModel<a_user>();
+        //    }
+        //    return RedirectToAction("Index", "Home");
+        //}
+
+
+        public ActionResult UserList(ListModel<a_user> Model)
+        {
+            if (LoginOn())
+            {
+                int Page = -1;
+                if ((int)Model.Page == 0 || (int)Model.Page == null)
+                {
+                    Page = 1;
+                    Model.Page = Page;
+                }
+                int PageCount;
+                Model.List = US.List(Model.Page, out PageCount, 50).ToList();
+                Model.PageCount = PageCount;
+                return View(Model);
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult AlbumList(ListModel<a_ablum> Model)
+        {
+            if (LoginOn())
+            {
+                int Page = -1;
+                if ((int)Model.Page == 0 || (int)Model.Page == null)
+                {
+                    Page = 1;
+                    Model.Page = Page;
+                }
+                int PageCount;
+                Model.List = AS.List(Model.Page, out PageCount, 50).ToList();
+                Model.PageCount = PageCount;
+                return View(Model);
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult UpicList(ListModel<a_upicture> Model)
+        {
+            if (LoginOn())
+            {
+                //if (Model.reload != null && Model.reload == 1)
+                //{
+                //    return View(Model);
+                //}
+                int Page = -1;
+                if ((int)Model.Page == 0 || (int)Model.Page == null)
+                {
+                    Page = 1;
+                    Model.Page = Page;
+                }
+                int PageCount;
+                if (Model.AID == null ||  Model.AID == 0)
+                {
+                    Model.List = UPS.List(Model.Page, out PageCount, 50).ToList();
+                }
+                else
+                {
+                    Model.List = UPS.AblumUPicList(Model.AID, Model.Page, out PageCount, 50).ToList();
+                }
+                Model.PageCount = PageCount;
+                Model.action = "UpicList";
+                return View(Model);
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult PicList(ListModel<a_picture> Model)
+        {
+            if (LoginOn())
+            {
+                int Page = -1;
+                if ((int)Model.Page == 0 || (int)Model.Page == null)
+                {
+                    Page = 1;
+                    Model.Page = Page;
+                }
+                int PageCount;
+                Model.List = PS.List(Model.Page, out PageCount, 50).ToList();
+                Model.PageCount = PageCount;
+                return View(Model);
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult EvaList(ListModel<a_evaluation> Model)
+        {
+            if (LoginOn())
+            {
+                int Page = -1;
+                if ((int)Model.Page == 0 || (int)Model.Page == null)
+                {
+                    Page = 1;
+                    Model.Page = Page;
+                }
+                int PageCount;
+                if (Model.PID == null || Model.PID == 0)
+                {
+                    Model.List = ES.List(Model.Page, out PageCount, 50).ToList();
+                }
+                else
+                {
+                    Model.List = ES.PicList(Model.PID, Model.Page, out PageCount, 50).ToList();
+                }
+                
+                Model.PageCount = PageCount;
+                return View(Model);
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult Delete(DeleteModel Model)
+        {
+            if (LoginOn())
+            {
+                switch (Model.type)
+                {
+                    case "UserList":
+                        {
+                            US.Delete(Model.id);
+                        } break;
+                    case "AlbumList":
+                        {
+                            AS.Delete(Model.id);
+                        } break;
+                    case "UpicList":
+                        {
+                            UPS.Delete(Model.id);
+                        } break;
+                    case "PicList":
+                        {
+                            PS.Delete(Model.id);
+                        } break;
+                    case "EvaList":
+                        {
+                            ES.Delete(Model.id);
+                        } break;
+                }
+                return RedirectToAction(Model.type, "Admin", new { Page = Model.Page });
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        //public ActionResult AlbumPicList(ListModel<a_upicture> Model)
+        //{ 
+        //    if (LoginOn())
+        //    {
+        //        int Page = -1;
+        //        if ((int)Model.Page == 0 || (int)Model.Page == null)
+        //        {
+        //            Page = 1;
+        //            Model.Page = Page;
+        //        }
+        //        int PageCount;
+        //        Model.List = UPS.AblumUPicList(Model.AID,Model.Page, out PageCount, 50).ToList();
+        //        Model.PageCount = PageCount;
+        //        Model.reload = 1;
+        //        Model.action = "AlbumPicList";
+        //        return RedirectToAction("UpicList", "Admin",Model);
+        //    }
+        //    return RedirectToAction("Index", "Home");
+        //}
+
+        public bool LoginOn()
+        {
+            if (Session["login"] != null && Session["login"].ToString() == "yes")
+            {
+                return true;
+            }
+            return true;
+        }
+    }
+}

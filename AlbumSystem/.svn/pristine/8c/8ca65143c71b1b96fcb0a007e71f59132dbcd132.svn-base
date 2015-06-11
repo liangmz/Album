@@ -1,0 +1,18 @@
+﻿
+function getPic(pid, title, time, des, src) {
+    var div = document.createElement('div');
+    div.className = 'thumbnail';
+
+    var picContent = '<a href="ThisPic.aspx?pid='+pid+'">'+
+            '<img src="data:image/jpeg;base64,'+src+'" class="img-responsive img-rounded mypic">'+
+        '</a>'+
+        '<div>'+
+            '<h6>'+title+'</h6>'+
+            '<p>'+
+                '<a href="javascript:void(0)">'+time+'</a>'+
+            '</p>'+
+        '</div>';
+    div.innerHTML = picContent;
+    return div;
+}
+
