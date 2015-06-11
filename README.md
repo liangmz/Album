@@ -14,12 +14,14 @@ PictureUpload：picture upload server
 MySQL_OUT_Album.sql：database
 
 
-running:
+[Running:]
+
 Client <-> AlbumSystem <-> AblumService <-> ADO.NET <-> DB
 
 Admin <-> AblumAdmin <-> DB_Service <-> DB
 
-else:
+[Else:]
+
 bootstrap
 
 
