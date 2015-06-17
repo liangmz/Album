@@ -5,7 +5,7 @@ AblumAdmin：.net mvc
 
 AblumService：Webservice ADO.NET
 
-AlbumSystem：asp.net Ajax
+AlbumSystem：asp.net
 
 DB_Service：Entity Framework
 
